@@ -1,0 +1,74 @@
+
+# - TEST_ENVIRONMENT
+#   Tells OZ what environment to run tests against, values for
+#   this option are defined in `../environment_config.yml`
+
+#TEST_ENVIRONMENT: "DEV"
+TEST_ENVIRONMENT: "QA"
+
+
+# - BROWSER
+#   Tells OZ what browser to run tests in. (chrome, firefox, or internet_explorer)
+
+BROWSER: "chrome"
+#BROWSER: "firefox"
+#BROWSER: "internet_explorer"
+
+
+# - CLOSE_BROWSER
+#   When set OZ will automatically close the browser
+#   window when a test completes.
+
+CLOSE_BROWSER: "true"
+#CLOSE_BROWSER: "false"
+
+
+# - USE_GRID
+#   When set OZ will attempt to use the selenium grid
+#   instance configured for the appropriate environment in environment.yml
+
+USE_GRID: 'false'
+#USE_GRID: 'true'
+
+
+# - PRINT_LEDGER
+#   When set OZ will dump the contents of the
+#   Ledger object to the console at the end of every test.
+
+PRINT_LEDGER: "false"
+#PRINT_LEDGER: "true"
+
+
+# - LEDGER_TRUNCATION
+#   When set OZ will only print the first 50
+#   characters of a line when printing Ledger output.
+
+LEDGER_TRUNCATION: "true"
+#LEDGER_TRUNCATION: "false"
+
+
+# - LOG_LEVEL
+#   'DEBUG' has the most verbose output.
+#   'WARN' has the least verbose output.
+
+LOG_LEVEL: "DEBUG"
+#LOG_LEVEL: "INFO"
+#LOG_LEVEL: "ACTION"
+#LOG_LEVEL: "WARN"
+
+
+# - COLORLESS_OUTPUT
+#   When set OZ will not have any colored output in the terminal
+#   When set some features of the logger will become turned off
+
+COLORLESS_OUTPUT: "false"
+#COLORLESS_OUTPUT: "true"
+
+
+# - CREATE_DOT_GRAPH
+#   When set OZ will output a page_graph.dot file that
+#   is a representation of all routes and pages in the
+#   app that OZ's navigation system knows about.
+
+CREATE_DOT_GRAPH: "false"
+#CREATE_DOT_GRAPH: "true"

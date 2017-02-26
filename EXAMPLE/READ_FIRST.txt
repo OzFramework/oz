@@ -1,0 +1,5 @@
+
+Note that the examples in this directory are based on the example website work done by seleniumframework.com
+As such there is no guarantee that these examples will work indefinitely as that site may change content at their own discretion.
+A better solution would be to have our own 'testing' site hosted somewhere that we can write examples for.
+Perhaps at a later phase of this project that will become feasible but for now this will serve well enough.
