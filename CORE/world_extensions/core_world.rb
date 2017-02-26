@@ -9,7 +9,7 @@ module CoreWorld
     def create_empty_world(page_class)
         load_configuration
         colorless_output = @configuration['COLORLESS_OUTPUT'] == 'true'
-        @logger = TallyLogger.new(self, TallyLogger.send(@configuration['LOG_LEVEL'].to_sym), colorless_output )
+        @logger = OzLogger.new(self, OzLogger.send(@configuration['LOG_LEVEL'].to_sym), colorless_output )
         log_header
         log_configuration
 
