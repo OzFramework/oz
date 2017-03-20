@@ -39,22 +39,9 @@ class CorePage
     def validate_all_static_content
         data = expected_data()
         raise ArgumentError, "ERROR: Method: [expected_data] of class [#{self.class}] should return a Hash\n" unless data.class == Hash
-        elements = get_all_elements_of(:static_text, include_inactive=true)
-        elements += get_all_elements_of(:select_list, include_inactive=true)
 
-        elements.each do |element|
-            if element.active
-                @world.logger.validation "Checking that element [#{element.name}] contains [#{data[element.name]}]"
-                element.flash
-                if element.type == :select_list
-                    raise "ERROR! Select List [#{element.name}] has incorrect options!\n\tFOUND   : #{element.options}\n\tEXPECTED: #{data[element.name].inspect}\n\tYML_FILE: #{yml_file}\n\n" unless element.options == data[element.name]
-                else
-                    raise "ERROR! Element [#{element.name}] has incorrect value!\n\tFOUND   : #{element.value.inspect}\n\tEXPECTED: #{data[element.name].inspect}\n\tYML_FILE: #{yml_file}\n\n" unless element.value == data[element.name]
-                end
-            else
-                @world.logger.validation "Checking that element [#{element.name}] is not displayed..."
-                raise "ERROR! Element [#{element.name}] was found on the page!\n\tFOUND: #{element.name}\n\tEXPECTED: Element should not be displayed!\n\n" unless element.visible? == false
-            end
+        @elements.values.each do |element|
+            element.validate(data[element.name])
         end
     end
 

@@ -29,15 +29,4 @@ class CorePage
     def add_button(name, options)
         return add_element(name, options, ButtonElement)
     end
-
-    def get_all_elements_of(type = :static_text, include_inactive = false)
-        elements = []
-        @elements.values.each do |element|
-            if element.type == type and (element.active or include_inactive)
-                elements << element
-            end
-        end
-        return elements
-    end
-
 end
