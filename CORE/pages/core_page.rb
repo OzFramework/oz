@@ -36,7 +36,7 @@ class CorePage
         @elements[element_name].click
     end
 
-    def validate_all_static_content
+    def validate_content
         data = expected_data()
         raise ArgumentError, "ERROR: Method: [expected_data] of class [#{self.class}] should return a Hash\n" unless data.class == Hash
 
