@@ -107,4 +107,15 @@ class CoreElement
     @active = false
   end
 
+  def validate(data)
+    if active
+      @world.logger.validation "Checking that [#{@name}] is displayed..."
+      raise "ERROR! [#{@name}] was not found on the page!\n\tFOUND: None\n\tEXPECTED: #{@name} should be displayed!\n\n" unless visible? == true
+      flash
+    else
+      @world.logger.validation "Checking that [#{@name}] is not displayed..."
+      raise "ERROR! [#{@name}] was found on the page!\n\tFOUND: #{@name}\n\tEXPECTED: Element should not be displayed!\n\n" unless visible? == false
+    end
+  end
+
 end
