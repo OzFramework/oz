@@ -1,10 +1,6 @@
 
 class RouterStore
 
-  class << self
-    attr_accessor :stored_specs, :stored_routes, :stored_elements
-  end
-
   def self.stored_specs
     @@stored_specs
   end
@@ -16,7 +12,7 @@ class RouterStore
   def self.stored_elements
     @@stored_elements
   end
-  
+
   @@stored_specs = {}
   @@stored_routes = []
   @@stored_elements = {}
