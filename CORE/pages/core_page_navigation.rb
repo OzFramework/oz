@@ -10,20 +10,20 @@ class CorePage
     def self.inherited(subclass)
         subclass.parent_classes = [self] - [CorePage]
         subclass.parent_classes += self.parent_classes if self.parent_classes
-        Router.store_page_spec(subclass, subclass.parent_classes)
+        RouterStore.store_page_spec(subclass, subclass.parent_classes)
         super
     end
 
     def self.add_route(page_class_symbol, action, prerequisites=[])
-        Router.store_route(self, page_class_symbol, action, prerequisites)
+        RouterStore.store_route(self, page_class_symbol, action, prerequisites)
     end
 
     def self.add_id_element(element_type, value, id_hash)
-        Router.store_id_element(self, element_type, id_hash, value)
+        RouterStore.store_id_element(self, element_type, id_hash, value)
     end
 
     def self.add_wait_element(element_type, action = :wait_until_present, id_hash)
-        Router.store_wait_element(self, element_type, id_hash, action)
+        RouterStore.store_wait_element(self, element_type, id_hash, action)
     end
 
 
