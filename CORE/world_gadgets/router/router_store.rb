@@ -1,18 +1,6 @@
 
 class RouterStore
 
-  def self.stored_specs
-    @@stored_specs
-  end
-
-  def self.stored_routes
-    @@stored_routes
-  end
-
-  def self.stored_elements
-    @@stored_elements
-  end
-
   @@stored_specs = {}
   @@stored_routes = []
   @@stored_elements = {}
@@ -41,6 +29,41 @@ class RouterStore
   def self.store_wait_element(page, element_type, id_hash, action)
     options_hash = { element_type: element_type }.merge(id_hash)
     self.store_element(page, options_hash, action, :wait)
+  end
+
+  def self.generate_graph(world)
+    page_specs = {}
+    @@stored_specs.each_pair do |pagename, pagespec|
+      page_specs[pagename] = pagespec.empty_copy
+    end
+
+    @@stored_routes.each do |route|
+      target_page = CoreUtils.find_class( route[:target_page] )
+      page_specs[ route[:source_page] ].add_route( target_page, route[:action], route[:prerequisites])
+    end
+
+    @@stored_elements.each_pair do |page, data|
+      data.each do |item|
+        element = CoreElement.new(:ident, world, item[:options_hash])
+        page_specs[page].add_wait_element(element, item[:action]) if item[:type] == :wait
+        page_specs[page].add_id_element(element, item[:action])   if item[:type] == :id
+      end
+    end
+
+    parents = []
+    page_specs.values.each do |spec|
+      spec.parents.each do |parent|
+        spec.inherit_details(page_specs[parent])
+        parents.push( parent )
+      end
+    end
+
+    parents.uniq.each do |parent|
+      page_specs.delete(parent)
+    end
+
+    return page_specs
+
   end
 
 end

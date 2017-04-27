@@ -3,36 +3,7 @@ class Router
 
   def initialize(world)
     @world = world
-    @page_specs = {}
-    RouterStore.stored_specs.each_pair do |pagename, pagespec|
-      @page_specs[pagename] = pagespec.empty_copy
-    end
-
-    RouterStore.stored_routes.each do |route|
-      target_page = CoreUtils.find_class( route[:target_page] )
-      @page_specs[ route[:source_page] ].add_route( target_page, route[:action], route[:prerequisites])
-    end
-
-    RouterStore.stored_elements.each_pair do |page, data|
-      data.each do |item|
-        element = CoreElement.new(:ident, @world, item[:options_hash])
-        @page_specs[page].add_wait_element(element, item[:action]) if item[:type] == :wait
-        @page_specs[page].add_id_element(element, item[:action])   if item[:type] == :id
-      end
-    end
-
-    parents = []
-    @page_specs.values.each do |spec|
-      spec.parents.each do |parent|
-        spec.inherit_details(@page_specs[parent])
-        parents.push( parent )
-      end
-    end
-
-    parents.uniq.each do |parent|
-      @page_specs.delete(parent)
-    end
-
+    @page_specs = RouterStore.generate_graph(@world)
     create_dot_file_from_graph if @world.configuration['CREATE_DOT_GRAPH'] == 'true'
   end
 
