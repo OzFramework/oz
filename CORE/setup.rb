@@ -1,10 +1,13 @@
 
 #Flip this to true if you are having load-order issues.
-DEBUG_LOADING = true
-# DEBUG_LOADING = false
+# DEBUG_LOADING = true
+DEBUG_LOADING = false
 
 print "\n=== Loading CORE Directory ===\n" if DEBUG_LOADING
 print "Loading CORE/setup.rb\n" if DEBUG_LOADING
+
+ENV['OZ_CORE_DIR'] = File.dirname(__FILE__)
+print "CORE location: [#{ENV['OZ_CORE_DIR']}]\n" if DEBUG_LOADING
 
 $world = Object.new() unless defined?(Cucumber)
 
