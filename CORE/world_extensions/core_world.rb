@@ -3,7 +3,7 @@ require 'Watir-webdriver'
 
 module CoreWorld
 
-    attr_accessor :browser, :configuration, :ledger, :router
+    attr_accessor :browser, :configuration, :ledger, :router, :data_engine
     attr_reader :root_page, :data_target, :logger
 
     def create_empty_world(page_class)
@@ -12,9 +12,9 @@ module CoreWorld
         @logger = OzLogger.new(self, OzLogger.send(@configuration['LOG_LEVEL'].to_sym), colorless_output )
         log_header
         log_configuration
-
         reset_data_target
 
+        @data_engine = DataEngine.new(@logger)
         @ledger = Ledger.new(self)
         @root_page = page_class.new(self, root_page=true)
     end

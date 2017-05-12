@@ -50,11 +50,11 @@ class CorePage
     ############
 
     def input_data(data_name)
-        @world.get_input_data(yml_file, data_name)
+        @world.data_engine.get_input_data(yml_file, data_name)
     end
 
     def expected_data(data_name = "DEFAULT")
-        @world.get_expected_data(yml_file, data_name)
+        @world.data_engine.get_expected_data(yml_file, data_name)
     end
 
     def yml_file
