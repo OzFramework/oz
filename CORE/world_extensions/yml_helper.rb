@@ -4,7 +4,6 @@ module YmlHelper
 
 	# loads in the yml file and then returns the data inside of it
 	def load_data_from_yml(filename)
-	    filename = "#{__FILE__.split("CORE")[0]}CORE/#{filename}"
 	    @logger.debug "Loading data from file #{filename}" if @logger
 		begin 
 			data = YAML.load_file(filename)
