@@ -16,6 +16,7 @@ module CoreWorld
 
         @data_engine = DataEngine.new(@logger)
         @ledger = Ledger.new(self)
+        @router = Router.new(self)
         @root_page = page_class.new(self, root_page=true)
     end
 
@@ -52,8 +53,6 @@ module CoreWorld
                 raise "ERROR: No browser specified in configuration!\n" if @configuration['BROWSER'].nil?
                 raise "ERROR: Browser #{@configuration['BROWSER']} is not supported!\n"
         end
-
-        @router = Router.new(self)
     end
 
     def create_chrome_browser
