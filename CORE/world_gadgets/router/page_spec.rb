@@ -1,18 +1,9 @@
 
-class Route
-
-    attr_reader :action, :target_page, :prerequisites
-
-    def initialize(target_page, action, prerequisites)
-      @target_page = target_page
-      @action = action
-      @prerequisites = [ prerequisites ].flatten
-    end
-end
-
 class PageSpec
 
   attr_accessor :source_page, :parents, :routes, :id_elements, :wait_elements
+
+  Route = Struct.new(:target_page, :action, :prerequisites)
 
   def initialize(source_page, parents)
     @source_page = source_page
@@ -33,7 +24,7 @@ class PageSpec
   end
 
   def add_route(target_page, action, prerequisites)
-    @routes[target_page] ||= Route.new( target_page, action, prerequisites )
+    @routes[target_page] ||= Route.new( target_page, action, [ prerequisites ].flatten )
   end
 
   def add_id_element(element, action)
