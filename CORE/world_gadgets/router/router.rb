@@ -4,7 +4,7 @@ class Router
   def initialize(world)
     @world = world
     @page_specs = RouterStore.generate_graph(@world)
-    create_dot_file_from_graph if @world.configuration['CREATE_DOT_GRAPH'] == 'true'
+    create_dot_file_from_graph if @world.configuration['CREATE_DOT_GRAPH']
   end
 
   def wait_for_page_to_load(target_page = @world.current_page.class)

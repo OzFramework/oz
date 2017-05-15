@@ -70,7 +70,7 @@ class Ledger
 
         @objects.each_pair do |key, value|
             print "\n  == #{key.to_s.upcase} ==\n"
-            truncate = @world.configuration["LEDGER_TRUNCATION"] == 'true'
+            truncate = @world.configuration['LEDGER_TRUNCATION']
             if value.class == Hash
                 CoreUtils.recursively_print_hash(value, truncate, indent='    ')
             elsif value.class == Array
