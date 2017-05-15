@@ -50,6 +50,7 @@ def recursively_require_all_base_pages(directory)
 end
 
 require_all('./utils')
+require_all('./world_gadgets/router')
 require_all('./world_gadgets')
 require_all('./world_extensions')
 require_relative('./elements/_core_element.rb')
