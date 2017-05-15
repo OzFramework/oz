@@ -12,13 +12,13 @@ class DataEngine
       data = YAML.load_file(filename)
       return data
     rescue Psych::SyntaxError => e
-      raise "ERROR: Tally could not parse this YML file!\n"\
+      raise "ERROR: OZ could not parse this YML file!\n"\
 		        "\tMY GUESS: You have a syntax error in your .yml file\n"\
 		        "\tYML_FILE: #{filename}\n"\
 		        "\tNOTE: Could be from inherited page YML file\n"
       "\tORIGINAL MESSAGE: #{e.message}\n\n"
     rescue Errno::ENOENT => e
-      raise "ERROR: Tally could not parse this YML file!\n"\
+      raise "ERROR: OZ could not parse this YML file!\n"\
                 "\tMY FIRST GUESS: The path to this YML file is incorrect.\n"\
                 "\tMY SECOND GUESS: The yml file is missing.\n"\
                 "\tYML_FILE: #{filename}\n"\
