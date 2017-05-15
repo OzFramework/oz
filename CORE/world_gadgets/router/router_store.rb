@@ -32,16 +32,20 @@ class RouterStore
   end
 
   def self.generate_graph(world)
+
+    #Create copy of stored specs
     page_specs = {}
     @@stored_specs.each_pair do |pagename, pagespec|
       page_specs[pagename] = pagespec.empty_copy
     end
 
+    #Copy Routes into specs
     @@stored_routes.each do |route|
       target_page = CoreUtils.find_class( route[:target_page] )
       page_specs[ route[:source_page] ].add_route( target_page, route[:action], route[:prerequisites])
     end
 
+    #Copy Elements into specs
     @@stored_elements.each_pair do |page, data|
       data.each do |item|
         element = CoreElement.new(:ident, world, item[:options_hash])
@@ -50,6 +54,7 @@ class RouterStore
       end
     end
 
+    #Inherit all details from parents
     parents = []
     page_specs.values.each do |spec|
       spec.parents.each do |parent|
@@ -58,12 +63,12 @@ class RouterStore
       end
     end
 
+    #Remove all parents from graph
     parents.uniq.each do |parent|
       page_specs.delete(parent)
     end
 
     return page_specs
-
   end
 
 end
