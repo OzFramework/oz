@@ -50,23 +50,16 @@ class CorePage
     ############
 
     def input_data(data_name)
-        @world.get_input_data(yml_file, data_name)
+        @world.data_engine.get_input_data(yml_file, data_name)
     end
 
     def expected_data(data_name = "DEFAULT")
-        @world.get_expected_data(yml_file, data_name)
+        @world.data_engine.get_expected_data(yml_file, data_name)
     end
 
     def yml_file
-        app_directory = @world.configuration["APP_NAME"]
-
         #The extra long gunk here basically just looks for the file that has the 'create_elements' method defined inside it and replaces the .rb extension with .yml
-        yml_absolute_path = self.class.instance_method(:create_elements).source_location.first.gsub(/\.rb$/,".yml")
-        yml_relative_path = yml_absolute_path.split(app_directory).last
-
-        #TODO: Updates are needed here to remove the core directory dependence
-        #Return a path that is relative to the /CORE directory.
-        return "../#{app_directory}/#{yml_relative_path}"
+        self.class.instance_method(:create_elements).source_location.first.gsub(/\.rb$/,".yml")
     end
 
     def browser
