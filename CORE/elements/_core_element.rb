@@ -36,16 +36,14 @@ class CoreElement
     @active = @options[:active]
 
     assign_element_type
-    create_watir_element
-
   end
 
   def browser
     @world.browser
   end
 
-  def create_watir_element
-    @watir_element = browser.send(@element_type, @locator_hash)
+  def watir_element
+    @watir_element ||= browser.send(@element_type, @locator_hash)
   end
 
   def assign_element_type
@@ -58,11 +56,11 @@ class CoreElement
     assert_active
     @world.logger.action "Clicking [#{@name}]"
     begin
-      @watir_element.click
+      watir_element.click
     rescue Selenium::WebDriver::Error::UnknownError => e
       raise e unless e.message =~ /Element is not clickable at point .* Other element would receive the click/
       @world.logger.warn 'Click failed, assuming it was due to animations on the page. Trying again...'
-      raise "Click kept failing! Original Error: \n#{e}" unless CoreUtils.wait_safely(3){ @watir_element.click }
+      raise "Click kept failing! Original Error: \n#{e}" unless CoreUtils.wait_safely(3){ watir_element.click }
     end
     @on_click.call if @on_click
   end
@@ -72,9 +70,9 @@ class CoreElement
   end
 
   def visible?
-    return false unless @watir_element.exists?
+    return false unless watir_element.exists?
     begin
-      return @watir_element.visible?
+      return watir_element.visible?
     rescue Watir::Exception::UnknownObjectException => e
       @world.logger.warn 'Object not found during visibility check, proceeding anyway...'
       return false
@@ -83,16 +81,16 @@ class CoreElement
 
   def flash
     assert_active
-    @watir_element.flash
+    watir_element.flash
   end
 
   def value
     assert_active
-    @watir_element.text
+    watir_element.text
   end
 
   def attribute_value(attribute_name)
-    @watir_element.attribute_value(attribute_name)
+    watir_element.attribute_value(attribute_name)
   end
 
   def assert_active
