@@ -27,13 +27,11 @@ class DataEngine
   end
 
   def get_yml_data(data_type, filename, data_name)
-    data_name = data_name.upcase.gsub(" ","_")
     raw_data = load_data_from_yml(filename)[data_type]
-    data = raw_data[data_name]
-    default_data = raw_data["DEFAULT"]
+    default_data = raw_data['DEFAULT']
     raise "DEFAULT key is empty for #{filename}!" if default_data == nil
-    default_data = default_data.merge!(data) if data
-    return default_data
+    data = raw_data[data_name.upcase.gsub(' ','_')]
+    return data ? default_data.merge!(data) : default_data
   end
 
   def get_input_data(filename, data_name)
