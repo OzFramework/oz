@@ -8,10 +8,10 @@ class OzLogger
   def self.ACTION ; 4 end
   def self.WARN   ; 8 end
 
-  def initialize(world, debug_level, colorless=false)
+  def initialize(world)
     @world = world
-    @debug_level = debug_level
-    @colorless = colorless
+    @debug_level = OzLogger.send(@world.configuration['LOG_LEVEL'].to_sym)
+    @colorless = @world.configuration['COLORLESS_OUTPUT'] == true
   end
 
   def debug(message)
