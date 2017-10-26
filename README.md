@@ -12,6 +12,6 @@ Simple setup instructions:
 
 2) To run the examples there are two steps:
 
-    `cd CORE/`
+    `cd EXAMPLE/`
 
     `cucumber -p example`
