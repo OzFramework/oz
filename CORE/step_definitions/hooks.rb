@@ -8,7 +8,7 @@ Before do |scenario|
   @logger.header "Feature: #{scenario.source.last.location}"
   @logger.header "Scenario: #{scenario.name}".cyan
   scenario.source.last.children.each do |step|
-    @logger.header "\t#{step.to_sexp[2..3].join(' ')}".cyan
+    @logger.header "\t#{step.text}".cyan
   end
   @logger.header ''
   @logger.header ''
