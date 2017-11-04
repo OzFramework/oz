@@ -21,5 +21,5 @@ Feature: Test feature for the OZ framework
 
   Scenario: Navigate back to the home page from the Casual Dresses Page
     Given I am on the Casual Dresses Page
-    When I click the banner home button
+    When I click the your logo button
     Then I should see the Home Page

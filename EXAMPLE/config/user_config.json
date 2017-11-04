@@ -1,5 +1,6 @@
 {
-  "TEST_ENVIRONMENT":"default",
-  "LOG_LEVEL":"INFO",
-  "BROWSER":"chrome"
+  "TEST_ENVIRONMENT": "default",
+  "LOG_LEVEL": "INFO",
+  "BROWSER": "chrome",
+  "CLOSE_BROWSER": true
 }

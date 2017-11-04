@@ -1,0 +1,5 @@
+EXPECTED_DATA:
+  DEFAULT:
+    :phone_info_static_text: "Call us now: 0123-456-789"
+    :practice_header_static_text: "Automation Practice Website"
+    :sub_header_static_text: "Practice Selenium"
