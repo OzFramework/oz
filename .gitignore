@@ -5,3 +5,6 @@
 #Cucumber output files
 *.json
 *.html
+
+debug.log
+page_graph.dot
