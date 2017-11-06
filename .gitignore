@@ -3,8 +3,8 @@
 .idea
 
 #Cucumber output files
-*.json
 *.html
+results.json
 
 debug.log
 page_graph.dot
