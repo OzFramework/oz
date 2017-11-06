@@ -29,4 +29,8 @@ class CorePage
     def add_button(name, options)
         return add_element(name, options, ButtonElement)
     end
+
+    def add_select_list(name, options)
+        add_element(name, options, SelectListElement)
+    end
 end
