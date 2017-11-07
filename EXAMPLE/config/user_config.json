@@ -1,5 +1,8 @@
 {
   "TEST_ENVIRONMENT":"default",
-  "LOG_LEVEL":"INFO",
-  "BROWSER":"chrome"
+  "LOG_LEVEL":"ACTION",
+  "BROWSER":"chrome",
+  "CREATE_DOT_GRAPH":"true",
+  "CLOSE_BROWSER":"true",
+  "PRINT_LEDGER":"true"
 }
