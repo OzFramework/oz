@@ -7,11 +7,6 @@ class SelectListElement < CoreElement
     @element_type = :input
   end
 
-  def value
-    assert_active
-    watir_element.text
-  end
-
   def fill(data)
     assert_active
     @world.logger.action "Filling [#{@name}] with [#{data}]"
