@@ -1,4 +1,4 @@
-class SelectListElement < FillableElement
+class SelectListElement < CoreElement
   def self.type
     :select_list
   end
