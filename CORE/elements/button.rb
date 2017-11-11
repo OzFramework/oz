@@ -1,5 +1,3 @@
-
-
 class ButtonElement < CoreElement
     def self.type
         :button

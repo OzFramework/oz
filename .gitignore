@@ -1,10 +1,9 @@
-
 #Intellij configs
 .idea
 
 #Cucumber output files
-*.html
 results.json
+*.html
 
 debug.log
 page_graph.dot

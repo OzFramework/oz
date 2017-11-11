@@ -1,5 +1,3 @@
-
-
 class ElementGroup
 
   def initialize(*elements)
@@ -12,6 +10,7 @@ class ElementGroup
       element.deactivate
     end
     @active = false
+    self
   end
 
   def activate
@@ -19,10 +18,15 @@ class ElementGroup
       element.activate
     end
     @active = true
+    self
   end
 
   def active?
     @active
+  end
+
+  def fill
+
   end
 
 end

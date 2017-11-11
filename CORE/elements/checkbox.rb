@@ -1,6 +1,6 @@
-class SelectListElement < CoreElement
+class CheckboxElement < CoreElement
   def self.type
-    :select_list
+    :checkbox
   end
 
   def assign_element_type
@@ -8,13 +8,13 @@ class SelectListElement < CoreElement
   end
 
   def fill(data)
+    checked = data.downcase == 'checked'
     assert_active
     @world.logger.action "Filling [#{@name}] with [#{data}]"
-    # manually_clear if @world.configuration["BROWSER"] == "internet_explorer"
-    watir_element.select(data)
+    watir_element.set(checked)
 
     begin
-      Watir::Wait.until(1){watir_element.text == data}
+      Watir::Wait.until(1){watir_element.set? == checked}
     rescue
       raise "ERROR: Problem filling element [#{@name}] with [#{data}] value after fill was found as [#{watir_element.value}]"
     end
@@ -23,6 +23,11 @@ class SelectListElement < CoreElement
   end
 
   def watir_element
-    @watir_element ||= browser.select(@locator_hash)
+    @watir_element ||= browser.checkbox(@locator_hash)
+  end
+
+  def value
+    assert_active
+    watir_element.set? ? 'checked' : 'unchecked'
   end
 end
