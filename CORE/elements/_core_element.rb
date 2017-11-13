@@ -107,12 +107,10 @@ class CoreElement
 
   def activate
     @active = true
-    self
   end
 
   def deactivate
     @active = false
-    self
   end
 
   def validate(data)
