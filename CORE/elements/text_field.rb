@@ -20,7 +20,7 @@ class TextFieldElement < FillableElement
       watir_element.click
       browser.send_keys(:end)
       watir_element.value.size.times do
-          browser.send_keys(:backspace) unless watir_element.value.chomp == ""
+          browser.send_keys(:backspace) unless watir_element.value == ""
       end
     end
 
