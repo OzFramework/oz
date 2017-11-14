@@ -48,7 +48,7 @@ module CoreUtils
 
   def self.wait_until(timeout, &block)
     begin
-      Watir::Wait.until(timeout, &block)
+      Watir::Wait.until(timeout: timeout, &block)
       return true
     rescue Watir::Wait::TimeoutError => e
       return false
@@ -67,7 +67,7 @@ module CoreUtils
     }
 
     begin
-      Watir::Wait.until(timeout, &safety_block)
+      Watir::Wait.until(timeout: timeout, &safety_block)
       return true
     rescue Watir::Wait::TimeoutError => e
       return false
