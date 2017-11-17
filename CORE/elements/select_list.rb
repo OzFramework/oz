@@ -19,6 +19,7 @@ class SelectListElement < CoreElement
       raise "ERROR: Problem filling element [#{@name}] with [#{data}] value after fill was found as [#{watir_element.value}]"
     end
     @world.ledger.record_fill(@name, data)
+    super
   end
 
   def watir_element

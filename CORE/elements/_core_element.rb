@@ -69,6 +69,14 @@ class CoreElement
     @on_click = block
   end
 
+  def fill(data)
+    @on_fill.call if @on_fill
+  end
+
+  def on_fill(&block)
+    @on_fill = block
+  end
+
   def visible?
     return false unless watir_element.exists?
     begin
