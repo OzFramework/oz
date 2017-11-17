@@ -14,11 +14,12 @@ class SelectListElement < CoreElement
     watir_element.select(data)
 
     begin
-      Watir::Wait.until(1){watir_element.text == data}
+      Watir::Wait.until(timeout: 1){watir_element.text == data}
     rescue
       raise "ERROR: Problem filling element [#{@name}] with [#{data}] value after fill was found as [#{watir_element.value}]"
     end
     @world.ledger.record_fill(@name, data)
+    super
   end
 
   def watir_element

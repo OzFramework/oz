@@ -1,5 +1,3 @@
-
-
 class ElementGroup
 
   def initialize(*elements)
@@ -24,5 +22,5 @@ class ElementGroup
   def active?
     @active
   end
-
+  
 end

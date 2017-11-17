@@ -33,4 +33,8 @@ class CorePage
     def add_select_list(name, options)
         add_element(name, options, SelectListElement)
     end
+
+    def add_checkbox(name, options)
+        add_element(name, options, CheckboxElement)
+    end
 end
