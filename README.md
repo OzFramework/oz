@@ -13,7 +13,7 @@ to perform on a regular basis.
 
 To combat maintenance Oz uses predictive modelling to determine validation rather than
 static scripted tests. More information on what we mean by predictive modelling vs scripted modelling (and how Oz manages this)
-can be found **[INSERT LINK HERE]**.
+can check out our page on [Predictive vs Scripted testing](https://github.com/greenarrowdb/oz/wiki/Predictive-vs-Scripted-testing).
 
 #### Keep the framework extensible and modular
   After automating various applications one thing becomes very clear: There is no such thing as a 'perfect solution'.
@@ -27,7 +27,7 @@ handle 90% of your problem, and be flexible enough to allow you to come up with 
 
 ## Documentation
 
-Usage and functional documentation can be found on the OzWiki **[INSERT LINK HERE]**
+Usage and functional documentation can be found on the [Oz Wiki](https://github.com/greenarrowdb/oz/wiki)
 
 
 
@@ -46,7 +46,7 @@ To run the examples included there are two steps:
 
 ## Quick Guide for setting up your application
 
-To setup a test suite for your application using Oz we have created a quick guide **[INSERT LINK HERE]**
+To setup a test suite for your application using Oz we have created a [quick guide](https://github.com/greenarrowdb/oz/wiki/Setup-Quick-Guide)
 
 
 ## Contributing and Questions
