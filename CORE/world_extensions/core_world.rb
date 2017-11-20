@@ -1,9 +1,9 @@
 
-require 'Watir-webdriver'
+require 'watir-webdriver'
 
 module CoreWorld
 
-    attr_accessor :browser, :configuration, :ledger, :router, :data_engine
+    attr_accessor :browser, :configuration, :ledger, :router, :data_engine, :browser_engine
     attr_reader :root_page, :data_target, :logger
 
     def create_world

@@ -27,8 +27,12 @@ class BrowserEngine
     if @world.configuration['USE_GRID']
       driver = Selenium::WebDriver.for(:remote, :url => @world.configuration['ENVIRONMENT']['GRID'] , desired_capabilities: caps)
     else
-      path = "#{@world.configuration['CORE_DIR']}/utils/web_drivers/chromedriver"
-      path += '.exe' if OS.windows?
+      if OS.linux?
+        path = "#{@world.configuration['CORE_DIR']}/utils/web_drivers/linux-chromedriver"
+      else
+        path = "#{@world.configuration['CORE_DIR']}/utils/web_drivers/chromedriver"
+        path += '.exe' if OS.windows?
+      end      
       driver = Selenium::WebDriver.for(:chrome, desired_capabilities: caps, driver_path: path)
     end
     return Watir::Browser.new(driver)
