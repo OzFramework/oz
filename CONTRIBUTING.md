@@ -13,11 +13,17 @@ We can't know about your bugs unless you tell us about them. If you think you've
 We follow a pretty straight-forward process for managing our Code contributions. Here are the steps for opening a Pull Request to Oz:
 
 __1. Fork the repo (from Master branch)__
+
 __2. Make local changes (making sure to pull updates from Master as they happen)__
+
 __3. Open a new Pull Request in Github__
+
 __4. We'll review your PR on Github and may request changes__
+
 __5. Make your changes based on feedback and update your PR__
+
 __6. Repeat steps 4 and 5 as necessary__
+
 __7. Once all reviews and changes have been made your PR will get merged into Oz__
 
 Before opening a Pull Request please follow these rules:
