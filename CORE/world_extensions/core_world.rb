@@ -3,7 +3,7 @@ require 'watir-webdriver'
 
 module CoreWorld
 
-    attr_accessor :browser, :configuration, :ledger, :router, :data_engine, :browser_engine
+    attr_accessor :browser, :configuration, :ledger, :router, :data_engine, :browser_engine, :validation_engine
     attr_reader :root_page, :data_target, :logger
 
     def create_world
@@ -13,6 +13,7 @@ module CoreWorld
         @ledger = Ledger.new(self)
         @router = Router.new(self)
         @browser_engine = BrowserEngine.new(self)
+        @validation_engine = ValidationEngine.new(self)
         log_header
         set_data_target
     end

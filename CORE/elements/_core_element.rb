@@ -115,12 +115,20 @@ class CoreElement
 
   def validate(data)
     if active
-      @world.logger.validation "Checking that [#{@name}] is displayed..."
-      raise "ERROR! [#{@name}] was not found on the page!\n\tFOUND: None\n\tEXPECTED: #{@name} should be displayed!\n\n" unless visible? == true
-      flash
+      validation_point = @world.validation_engine.add_validation_point("Checking that [#{@name}] is displayed...")
+      if visible? == true
+        validation_point.pass
+        flash
+      else
+        validation_point.fail("ERROR! [#{@name}] was not found on the page!\n\tFOUND: None\n\tEXPECTED: #{@name} should be displayed!")
+      end
     else
-      @world.logger.validation "Checking that [#{@name}] is not displayed..."
-      raise "ERROR! [#{@name}] was found on the page!\n\tFOUND: #{@name}\n\tEXPECTED: Element should not be displayed!\n\n" unless visible? == false
+      validation_point = @world.validation_engine.add_validation_point("Checking that [#{@name}] is not displayed...")
+      if visible? == false
+        validation_point.pass
+      else
+        validation_point.fail("ERROR! [#{@name}] was found on the page!\n\tFOUND: #{@name}\n\tEXPECTED: Element should not be displayed!")
+      end
     end
   end
 

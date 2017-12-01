@@ -7,7 +7,9 @@
     # Checks all of the static_text objects on the page to make sure they are present and contain the proper text.
     # The data used for checking is defined in the page class and/or in the page class's .yml file.
 Then /^I can see that all the content on the page is correct$/ do
-	@current_page.validate_content()
+  @validation_engine.enter_validation_mode
+  @current_page.validate_content()
+  @validation_engine.exit_validation_mode
 end
 
 
