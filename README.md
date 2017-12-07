@@ -52,7 +52,7 @@ To setup a test suite for your application using Oz we have created a [quick gui
 ## Contributing and Questions
 
 If you have a feature you would like to see included in the Oz CORE set of features you can submit a pull request
-following these guidelines. **[INSERT LINK HERE]**
+following [these guidelines](https://github.com/greenarrowdb/oz/blob/master/CONTRIBUTING.md).
 
 If you have questions, feedback, or would just like to chat about testing with the maintainers you can
-check out [the official Oz discord channel](https://discord.gg/yjKsWS6)
+check out the [Oz discord channel](https://discord.gg/yjKsWS6)
