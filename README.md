@@ -36,7 +36,7 @@ Usage and functional documentation can be found on the [Oz Wiki](https://github.
 To run Oz and its example tests you will need to have two gems installed beforehand:
 
     gem install cucumber
-    gem install watir-webdriver
+    gem install watir
 
 To run the examples included there are two steps:
 
