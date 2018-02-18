@@ -112,6 +112,10 @@ class CoreElement
   def deactivate
     @active = false
   end
+  
+  def activateIf(condition)
+    condition ? activate : deactivate
+  end
 
   def validate(data)
     if active
