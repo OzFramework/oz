@@ -19,3 +19,4 @@ default: --format pretty --format html --out results.html --format json --out re
 #TODO: The cucumber.yml file cannot live in the CORE indefinitely. There are ways around this, but it requires some code
   # changes in other parts of the framework first.
 example: ../EXAMPLE/scenarios --require ../EXAMPLE/setup.rb -p default
+run: ../EXAMPLE/scenarios --require ../EXAMPLE/setup.rb -p default -t @run
