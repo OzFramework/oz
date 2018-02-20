@@ -7,4 +7,8 @@ class ExampleStorefrontRootPage < CorePage
     @world.assert_and_set_page(HomePage)
   end
 
+  def create_common_elements
+    add_button(:sign_in, element_type: :a, class: 'login')
+  end
+
 end

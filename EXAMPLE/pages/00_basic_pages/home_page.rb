@@ -4,6 +4,7 @@ class HomePage < ExampleStorefrontRootPage
 
   add_id_element(:div, /Automation Practice Website/, id: 'editorial_block_center')
   add_route(:DressesPage, :dresses_button)
+  add_route(:SignInPage, :sign_in_button)
 
   def create_elements
 
