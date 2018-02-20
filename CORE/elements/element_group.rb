@@ -18,6 +18,10 @@ class ElementGroup
     end
     @active = true
   end
+  
+  def activate_if(condition)
+    condition ? activate : deactivate
+  end
 
   def active?
     @active

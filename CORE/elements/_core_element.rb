@@ -113,6 +113,14 @@ class CoreElement
     @active = false
   end
 
+  def active?
+    @active
+  end
+  
+  def activate_if(condition)
+    condition ? activate : deactivate
+  end
+
   def validate(data)
     if active
       @world.logger.validation "Checking that [#{@name}] is displayed..."
