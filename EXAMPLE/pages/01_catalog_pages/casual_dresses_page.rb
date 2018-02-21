@@ -1,6 +1,6 @@
 
 
-class CasualDressesPage < ExampleBasePage
+class CasualDressesPage < ExampleStorefrontBasePage
 
   add_id_element(:h1, /CASUAL DRESSES/, class: 'page-heading product-listing')
 

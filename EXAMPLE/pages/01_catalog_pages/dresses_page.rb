@@ -1,6 +1,6 @@
 
 
-class DressesPage < ExampleBasePage
+class DressesPage < ExampleStorefrontBasePage
 
   add_id_element(:h1, /DRESSES \nThere are 5 products./, class: 'page-heading product-listing')
   add_route(:CasualDressesPage, :casual_dresses_button)
