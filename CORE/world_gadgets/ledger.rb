@@ -34,6 +34,7 @@ class Ledger
     end
 
     def get_value(page_class, element_name)
+        return nil unless @filled_data[page_class]
         @filled_data[page_class][element_name]
     end
 
