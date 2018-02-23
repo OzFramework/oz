@@ -28,6 +28,7 @@ class Ledger
     end
 
     def record_fill(element_name, value)
+        @world.logger.warn "[ERROR RECORDING FILL] element_name expected to be a Symbol! Instead was given a [#{element_name.class}]!" unless element_name.is_a? Symbol
         page_name = @world.current_page.class
         @filled_data[page_name] = {} unless @filled_data[page_name]
         @filled_data[page_name][element_name] = value
