@@ -3,6 +3,7 @@
 class SignInPage < ExampleStorefrontRootPage
 
   add_id_element(:h1, /AUTHENTICATION/, class: 'page-heading')
+  add_route(:AccountPage, :submit_sign_in_button, :fill)
 
   def create_elements
 
