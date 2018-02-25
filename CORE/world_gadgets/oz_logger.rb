@@ -1,5 +1,3 @@
-
-
 class OzLogger
   # We can't just name this class 'Logger' because Cucumber has a class named that already :(
 
@@ -60,5 +58,4 @@ class OzLogger
     end
     return message
   end
-
 end
