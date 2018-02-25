@@ -17,7 +17,7 @@ class OzLogger
   def debug(message)
     prefix = '[ DEBUG    ]-> '
     prefix = prefix.gray unless @colorless
-    puts prefix + "#{_color_escape(message, :default, :orange)}" if @debug_level <= self.class.DEBUG
+    puts prefix + "#{_color_escape(message, :gray, :default)}" if @debug_level <= self.class.DEBUG
   end
 
   def header(message)
