@@ -1,5 +1,4 @@
-
-require 'watir-webdriver'
+require 'watir'
 
 module CoreWorld
 
