@@ -17,7 +17,7 @@ class OzLogger
   def debug(message)
     prefix = '[ DEBUG    ]-> '
     prefix = prefix.gray unless @colorless
-    puts prefix + "#{_color_escape(message, :gray, :black)}" if @debug_level <= self.class.DEBUG
+    puts prefix + "#{_color_escape(message, :default, :orange)}" if @debug_level <= self.class.DEBUG
   end
 
   def header(message)
@@ -27,13 +27,13 @@ class OzLogger
   def action(message)
     prefix = '[ ACTION   ]-> '
     prefix = prefix.cyan unless @colorless
-    puts prefix + "#{_color_escape(message, :black, :cyan)}" if @debug_level <= self.class.ACTION
+    puts prefix + "#{_color_escape(message, :default, :cyan)}" if @debug_level <= self.class.ACTION
   end
 
   def validation(message)
     prefix = '[ VALIDATE ]-> '
     prefix = prefix.green unless @colorless
-    puts prefix + "#{_color_escape(message, :black, :green)}" if @debug_level <= self.class.ACTION
+    puts prefix + "#{_color_escape(message, :default, :green)}" if @debug_level <= self.class.ACTION
   end
 
   def warn(message)

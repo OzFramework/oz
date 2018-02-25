@@ -15,6 +15,7 @@ class String
 	def pink;           "\e[35m#{self}\e[0m" end
 	def cyan;           "\e[36m#{self}\e[0m" end
 	def gray;           "\e[37m#{self}\e[0m" end
+  def default;        self                 end
 
 	def bg_black;       "\e[40m#{self}\e[0m" end
 	def bg_red;         "\e[41m#{self}\e[0m" end
@@ -24,6 +25,7 @@ class String
 	def bg_pink;        "\e[45m#{self}\e[0m" end
 	def bg_cyan;        "\e[46m#{self}\e[0m" end
 	def bg_gray;        "\e[47m#{self}\e[0m" end
+  def bg_default;     self                 end
 
 	def bold;           "\e[1m#{self}\e[22m" end
 	def italic;         "\e[3m#{self}\e[23m" end
