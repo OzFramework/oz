@@ -3,7 +3,8 @@
 class SignInPage < ExampleStorefrontRootPage
 
   add_id_element(:h1, /AUTHENTICATION/, class: 'page-heading')
-  add_route(:AccountPage, :submit_sign_in_button, :fill)
+  add_route(:AccountPage, :fill_already_registered)
+  add_route(:CreateAccountPage, :fill_create_account)
 
   def create_elements
 
@@ -26,6 +27,24 @@ class SignInPage < ExampleStorefrontRootPage
     add_text_field(:email_create, element_type: :input, id: 'email_create')
     add_button(:create_account, id: 'SubmitCreate')
 
+  end
+
+  def fill_already_registered
+    fill('SIGN_IN_DETAILS')
+    click_on(:submit_sign_in_button)
+  end
+
+  def fill_create_account
+    fill('A_NEW_ACCOUNT_EMAIL')
+    click_on(:create_account_button)
+  end
+
+  def input_data(data_name)
+    data = super(data_name)
+    if data[:email_create_text_field] == 'DYNAMICALLY_GENERATED'
+      data[:email_create_text_field] = "ozframeworktest+#{Time.now.to_i}@gmail.com"
+    end
+    return data
   end
 
 end

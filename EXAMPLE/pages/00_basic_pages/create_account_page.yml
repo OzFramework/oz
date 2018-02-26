@@ -1,0 +1,3 @@
+EXPECTED_DATA:
+  DEFAULT:
+    :your_personal_information_static_text: "YOUR PERSONAL INFORMATION"

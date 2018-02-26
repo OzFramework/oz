@@ -8,8 +8,14 @@ EXPECTED_DATA:
     :create_account_email_static_text: "Email address"
 INPUT_DATA:
   DEFAULT:
+    :password_text_field: ""
+  SIGN_IN_DETAILS:
     :email_text_field: "ozframeworktest@gmail.com"
     :password_text_field: "testpassword"
   INCORRECT_USER_DETAILS:
     :email_text_field: "notreal@notreal.com"
     :password_text_field: "fakefake"
+  AN_ALREADY_USED_EMAIL_IN_THE_CREATE_ACCOUNT_FIELD:
+    :email_create_text_field: "ozframeworktest@gmail.com"
+  A_NEW_ACCOUNT_EMAIL:
+    :email_create_text_field: "DYNAMICALLY_GENERATED"
