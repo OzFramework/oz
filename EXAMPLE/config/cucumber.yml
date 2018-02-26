@@ -16,4 +16,4 @@
 # The default profile only defines some output that we want to have for ALL of our tests
 default: --format pretty --format html --out results.html --format json --out results.json
 example: ../EXAMPLE/scenarios --require ../EXAMPLE/setup.rb -p default
-run: ../EXAMPLE/scenarios --require ../EXAMPLE/setup.rb -p default -t @run
+run: -p example --tags @run

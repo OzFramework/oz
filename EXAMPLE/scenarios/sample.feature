@@ -38,3 +38,8 @@ Feature: Test feature for the OZ framework
   Scenario: Static text to the Sign In Page
     Given I am on the Sign In Page
     Then I can see that all the content on the page is correct
+
+
+  Scenario: Static text to the Account Page
+    Given I am on the Account Page
+    Then I can see that all the content on the page is correct
