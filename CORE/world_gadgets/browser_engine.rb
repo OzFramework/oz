@@ -27,7 +27,11 @@ class BrowserEngine
       driver = Selenium::WebDriver.for(:remote, :url => @world.configuration['ENVIRONMENT']['GRID'] , desired_capabilities: capabilities)
     else
       options = Selenium::WebDriver::Chrome::Options.new
-      options.add_argument('headless') if @world.configuration['HEADLESS_CHROME']
+      if @world.configuration['HEADLESS_CHROME']
+        options.add_argument('headless')
+      else
+        options.add_option(:detach, true)
+      end
 
       if OS.linux?
         path = "#{@world.configuration['CORE_DIR']}/utils/web_drivers/linux-chromedriver"
