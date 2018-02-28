@@ -35,6 +35,8 @@ class Ledger
     end
 
     def get_value(page_class, element_name)
+        @world.logger.warn "[ERROR GETTING VALUE] page_class expected to be a Class! Instead was given a [#{element_name.class}]!" unless element_name.is_a? Class
+        @world.logger.warn "[ERROR GETTING VALUE] element_name expected to be a Symbol! Instead was given a [#{element_name.class}]!" unless element_name.is_a? Symbol
         return nil unless @filled_data[page_class]
         @filled_data[page_class][element_name]
     end
