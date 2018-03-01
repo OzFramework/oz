@@ -59,7 +59,7 @@ class Ledger
         print "===   LEDGER VALUES   ===\n"
         print "==========================\n"
 
-        print "\n == VISITED_PAGES ==\n"
+        print "\n === VISITED_PAGES ===\n"
         @pages_visited.each do |item|
             print "    #{item[0]} @ #{item[1].asctime}\n"
         end
@@ -73,7 +73,7 @@ class Ledger
         end
 
         @objects.each_pair do |key, value|
-            print "\n  == #{key.to_s.upcase} ==\n"
+            print "\n  === #{key.to_s.upcase} ===\n"
             truncate = @world.configuration['LEDGER_TRUNCATION']
             if value.class == Hash
                 CoreUtils.recursively_print_hash(value, truncate, indent='    ')
