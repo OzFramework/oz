@@ -59,7 +59,7 @@ class Ledger
         print "===   LEDGER VALUES   ===\n"
         print "==========================\n"
 
-        print "\n === VISITED_PAGES ===\n"
+        print "\n  === VISITED_PAGES ===\n"
         @pages_visited.each do |item|
             print "    #{item[0]} @ #{item[1].asctime}\n"
         end
