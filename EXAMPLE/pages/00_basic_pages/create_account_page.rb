@@ -11,7 +11,10 @@ class CreateAccountPage < ExampleStorefrontRootPage
     add_text_field(:last_name, id: 'customer_lastname')
     add_text_field(:email, id: 'email')
     add_text_field(:password, id: 'passwd')
-    # add_select_list(:dob_day, id: 'days') #TODO: find out why these select lists aren't working
+                                            #TODO: Select lists aren't working because of the way this site is implemented.
+                                            #      Watir sees them as being not visible even when they are visible.
+                                            #      This will probably translate into some kind of override for the example select lists.
+    # add_select_list(:dob_day, id: 'days') #TODO: Fix these select lists
     # add_select_list(:dob_month, id: 'months')
     # add_select_list(:dob_year, id: 'years')
 
