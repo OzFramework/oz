@@ -10,7 +10,6 @@ class SelectListElement < CoreElement
   def fill(data)
     assert_active
     @world.logger.action "Filling [#{@name}] with [#{data}]"
-    # manually_clear if @world.configuration["BROWSER"] == "internet_explorer"
     watir_element.select(data)
 
     begin
