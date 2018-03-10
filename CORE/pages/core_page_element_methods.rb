@@ -22,6 +22,10 @@ class CorePage
         return add_element(name, options, TextFieldElement)
     end
 
+    def add_text_area(name, options)
+      return add_element(name, options, TextAreaElement)
+    end
+
     def add_static_text(name, options)
         return add_element(name, options, StaticTextElement)
     end

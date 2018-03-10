@@ -57,7 +57,7 @@ class CreateAccountPage < ExampleStorefrontRootPage
     add_text_field(:zip, id: 'postcode')
     # add_select_list(:country, id: 'id_country')
 
-    # add_text_area(:additional_information, id: 'other') #TODO: add text area support
+    add_text_area(:additional_information, id: 'other')
     add_text_field(:home_phone, id: 'phone')
     add_text_field(:mobile_phone, id: 'phone_mobile')
     add_text_field(:address_alias, id: 'alias')
