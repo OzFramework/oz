@@ -34,6 +34,10 @@ class CorePage
         add_element(name, options, SelectListElement)
     end
 
+    def add_radio_button(name, options)
+        add_element(name, options, RadioButtonElement)
+    end
+
     def add_checkbox(name, options)
         add_element(name, options, CheckboxElement)
     end
