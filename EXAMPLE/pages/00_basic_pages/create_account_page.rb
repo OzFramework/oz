@@ -15,7 +15,8 @@ class CreateAccountPage < ExampleStorefrontRootPage
     add_static_text(:newsletter, element_type: :label, for: 'newsletter')
     add_static_text(:special_offers, element_type: :label, for: 'optin')
 
-    # add_radio_button(:title, id: 'id_gender1') #TODO: add radio button support
+    # add_radio_button(:mr, id: 'id_gender1') #TODO: radio buttons here seem to have the same visibility issues as other types
+    # add_radio_button(:mrs, id: 'id_gender2')
     add_text_field(:first_name, id: 'customer_firstname')
     add_text_field(:last_name, id: 'customer_lastname')
     add_text_field(:email, id: 'email')
