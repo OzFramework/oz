@@ -28,7 +28,6 @@ class RadioButtonElement < CoreElement
   end
 
   def watir_element
-    puts @locator_hash
     @watir_element ||= browser.radio(@locator_hash)
   end
 end
