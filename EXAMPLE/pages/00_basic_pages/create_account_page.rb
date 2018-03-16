@@ -15,23 +15,19 @@ class CreateAccountPage < ExampleStorefrontRootPage
     add_static_text(:newsletter, element_type: :label, for: 'newsletter')
     add_static_text(:special_offers, element_type: :label, for: 'optin')
 
-    # add_radio_button(:mr, id: 'id_gender1') #TODO: radio buttons here seem to have the same visibility issues as other types
-    # add_radio_button(:mrs, id: 'id_gender2')
+    add_radio_button(:mr, id: 'id_gender1')
+    add_radio_button(:mrs, id: 'id_gender2')
     add_text_field(:first_name, id: 'customer_firstname')
     add_text_field(:last_name, id: 'customer_lastname')
     add_text_field(:email, id: 'email')
     add_text_field(:password, id: 'passwd')
-                                            #TODO: Select lists aren't working because of the way this site is implemented.
-                                            #      Watir sees them as being not visible even when they are visible.
-                                            #      This will probably translate into some kind of override for the example select lists.
-    # add_select_list(:dob_day, id: 'days') #TODO: Fix these select lists
-    # add_select_list(:dob_month, id: 'months')
-    # add_select_list(:dob_year, id: 'years')
+    add_select_list(:dob_day, id: 'days') #TODO: Fix these select lists (won't fill)
+    add_select_list(:dob_month, id: 'months')
+    add_select_list(:dob_year, id: 'years')
 
     # add_checkbox(:newsletter, id: 'newsletter') #TODO: find out why these checkboxes aren't working
     # add_checkbox(:special_offers, id: 'optin')
-
-
+    
     add_static_text(:address_header, element_type: :h3, xpath: "//div[@class='account_creation'][2]/h3")
     add_static_text(:address_first_name, element_type: :label, for: 'firstname')
     add_static_text(:address_last_name, element_type: :label, for: 'lastname')

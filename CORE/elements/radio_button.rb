@@ -9,13 +9,14 @@ class RadioButtonElement < CoreElement
 
   def fill(data)
     assert_active
-    @world.logger.action "Filling [#{@name}] with [#{data}]"
-    watir_element.set(data == 'true' ? true : false)
-
-    begin
-      Watir::Wait.until(timeout: 1){watir_element.set? == data}
-    rescue
-      raise "ERROR: Problem filling element [#{@name}] with [#{data}] value after fill was found as [#{watir_element.set?}]"
+    @world.logger.action "Selecting [#{@name}]"
+    if data == 'selected'
+      watir_element.set
+      begin
+        Watir::Wait.until(timeout: 1){value}
+      rescue
+        raise "ERROR: Problem selecting element [#{@name}] value found after fill was [#{value}]"
+      end
     end
     @world.ledger.record_fill(@name, data)
     super
@@ -23,7 +24,7 @@ class RadioButtonElement < CoreElement
 
   def value
     assert_active
-    watir_element.set? ? 'true' : 'false'
+    watir_element.set? ? 'selected' : 'unselected'
   end
 
   def watir_element
