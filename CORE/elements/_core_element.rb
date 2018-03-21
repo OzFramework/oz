@@ -88,6 +88,7 @@ class CoreElement
   end
 
   def flash
+    return unless @world.configuration['FLASH_VALIDATION']
     assert_active
     watir_element.flash
   end
