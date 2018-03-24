@@ -21,7 +21,7 @@ class CreateAccountPage < ExampleStorefrontRootPage
     add_text_field(:last_name, id: 'customer_lastname')
     add_text_field(:email, id: 'email')
     add_text_field(:password, id: 'passwd')
-    add_select_list(:dob_day, id: 'days') #TODO: Fix these select lists (won't fill)
+    add_select_list(:dob_day, id: 'days')
     add_select_list(:dob_month, id: 'months')
     add_select_list(:dob_year, id: 'years')
 
@@ -50,15 +50,14 @@ class CreateAccountPage < ExampleStorefrontRootPage
     add_text_field(:address_1, id: 'address1')
     add_text_field(:address_2, id: 'address2')
     add_text_field(:city, id: 'city')
-    # add_select_list(:state, id: 'id_state')
+    add_select_list(:state, id: 'id_state')
     add_text_field(:zip, id: 'postcode')
-    # add_select_list(:country, id: 'id_country')
+    add_select_list(:country, id: 'id_country')
 
     add_text_area(:additional_information, id: 'other')
     add_text_field(:home_phone, id: 'phone')
     add_text_field(:mobile_phone, id: 'phone_mobile')
     add_text_field(:address_alias, id: 'alias')
-
 
   end
 
