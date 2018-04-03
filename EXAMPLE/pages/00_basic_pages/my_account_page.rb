@@ -7,6 +7,18 @@ class MyAccountPage < ExampleStorefrontRootPage
     add_static_text(:title, element_type: :h1, class: 'page-heading')
     add_static_text(:welcome, element_type: :p, class: 'info-account')
 
+    add_static_text(:order_history, element_type: :span, xpath: "//div[@class='row addresses-lists']/div[1]/ul/li[1]/a/span")
+    add_static_text(:my_credit_slips, element_type: :span, xpath: "//div[@class='row addresses-lists']/div[1]/ul/li[2]/a/span")
+    add_static_text(:my_addresses, element_type: :span, xpath: "//div[@class='row addresses-lists']/div[1]/ul/li[3]/a/span")
+    add_static_text(:my_personal_information, element_type: :span, xpath: "//div[@class='row addresses-lists']/div[1]/ul/li[4]/a/span")
+    add_static_text(:my_wishlists, element_type: :span, xpath: "//div[@class='row addresses-lists']/div[2]/ul/li[1]/a/span")
+
+    add_button(:order_history,           element_type: :link, xpath: "//div[@class='row addresses-lists']/div[1]/ul/li[1]/a")
+    add_button(:my_credit_slips,         element_type: :link, xpath: "//div[@class='row addresses-lists']/div[1]/ul/li[2]/a")
+    add_button(:my_addresses,            element_type: :link, xpath: "//div[@class='row addresses-lists']/div[1]/ul/li[3]/a")
+    add_button(:my_personal_information, element_type: :link, xpath: "//div[@class='row addresses-lists']/div[1]/ul/li[4]/a")
+    add_button(:my_wishlists,            element_type: :link, xpath: "//div[@class='row addresses-lists']/div[2]/ul/li[1]/a")
+
   end
 
   def on_page_load
