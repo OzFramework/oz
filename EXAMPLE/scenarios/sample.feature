@@ -59,3 +59,16 @@ Feature: Test feature for the OZ framework
   Scenario: Static text on the My Account Page
     Given I am on the My Account Page
     Then I can see that all the content on the page is correct
+
+
+  Scenario Outline: Navigation on the My Account Page
+    Given I am on the My Account Page
+    Then I click the <account option>
+
+  Examples:
+    | account option                 |
+    | order history button           |
+    | my credit slips button         |
+    | my addresses button            |
+    | my personal information button |
+    | my wishlists button            |
