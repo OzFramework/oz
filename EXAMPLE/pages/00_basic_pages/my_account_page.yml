@@ -1,0 +1,9 @@
+EXPECTED_DATA:
+  DEFAULT:
+    :title_static_text: "MY ACCOUNT"
+    :welcome_static_text: "Welcome to your account. Here you can manage all of your personal information and orders."
+    :order_history_static_text: "ORDER HISTORY AND DETAILS"
+    :my_credit_slips_static_text: "MY CREDIT SLIPS"
+    :my_addresses_static_text: "MY ADDRESSES"
+    :my_personal_information_static_text: "MY PERSONAL INFORMATION"
+    :my_wishlists_static_text: "MY WISHLISTS"

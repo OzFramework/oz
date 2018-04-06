@@ -50,7 +50,7 @@ class ValidationEngine
       raise "ERROR: Validation Mode was completed but no validation points were created."
     end
 
-    @world.logger.info("Validation Mode completed with #{@visited_points.length} checks.")
+    @world.logger.debug("Validation Mode completed with #{@visited_points.length} checks.")
   end
 
   def add_validation_point(message)

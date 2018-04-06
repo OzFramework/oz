@@ -10,13 +10,12 @@ class SelectListElement < CoreElement
   def fill(data)
     assert_active
     @world.logger.action "Filling [#{@name}] with [#{data}]"
-    # manually_clear if @world.configuration["BROWSER"] == "internet_explorer"
     watir_element.select(data)
 
     begin
       Watir::Wait.until(timeout: 1){watir_element.text == data}
     rescue
-      raise "ERROR: Problem filling element [#{@name}] with [#{data}] value after fill was found as [#{watir_element.value}]"
+      raise "ERROR: Problem filling element [#{@name}] with [#{data}] value after fill was found as [#{watir_element.text}]"
     end
     @world.ledger.record_fill(@name, data)
     super

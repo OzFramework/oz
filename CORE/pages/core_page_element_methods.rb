@@ -22,6 +22,10 @@ class CorePage
         return add_element(name, options, TextFieldElement)
     end
 
+    def add_text_area(name, options)
+      return add_element(name, options, TextAreaElement)
+    end
+
     def add_static_text(name, options)
         return add_element(name, options, StaticTextElement)
     end
@@ -32,6 +36,10 @@ class CorePage
 
     def add_select_list(name, options)
         add_element(name, options, SelectListElement)
+    end
+
+    def add_radio_button(name, options)
+        add_element(name, options, RadioButtonElement)
     end
 
     def add_checkbox(name, options)
