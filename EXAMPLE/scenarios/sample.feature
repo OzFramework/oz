@@ -72,3 +72,16 @@ Feature: Test feature for the OZ framework
       And I hover over the Dresses Button
     When I click the Casual Dresses Button
     Then I should see the Casual Dresses Page
+
+
+  Scenario Outline: Navigation on the My Account Page
+    Given I am on the My Account Page
+    Then I click the <account option>
+
+  Examples:
+    | account option                 |
+    | order history button           |
+    | my credit slips button         |
+    | my addresses button            |
+    | my personal information button |
+    | my wishlists button            |

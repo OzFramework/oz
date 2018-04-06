@@ -6,10 +6,27 @@ Before do |scenario|
   create_world
 
   @logger.header "Feature: #{scenario.source.last.location}"
-  @logger.header "Scenario: #{scenario.name}".cyan
-  scenario.source.last.children.each do |step|
-    @logger.header "\t#{step.text}".cyan
+  if scenario.source.last.class.to_s == 'Cucumber::Core::Ast::Scenario'
+    @logger.header "Scenario: #{scenario.name}".cyan
+    scenario.source.last.children.each do |step|
+      @logger.header "\t#{step.text}".cyan
+    end
+
+  elsif scenario.source.last.class.to_s == 'Cucumber::Core::Ast::ExamplesTable::Row'
+    @logger.header "Scenario Outline: #{scenario.name}".cyan
+    scenario.source[1].steps.each do |step|
+      @logger.header "\t#{step.text}".cyan
+    end
+    example_row = "\t| "
+    scenario.source.last.values.each do |value|
+      example_row += " #{value} |"
+    end
+    @logger.header "#{example_row}".cyan
+
+  else
+    @logger.warn 'WARNING: Oz could not parse scenario details'
   end
+
   @logger.header ''
   @logger.header ''
 
