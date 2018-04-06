@@ -26,3 +26,7 @@ end
 When /^I click the (.*)$/ do |element_name|
   @current_page.click_on(element_name.gsub(' ','_').downcase.to_sym)
 end
+
+When /^I hover over the (.*)$/ do |element_name|
+  @current_page.hover_over(element_name.gsub(' ','_').downcase.to_sym)
+end

@@ -9,13 +9,13 @@ class HomePage < ExampleStorefrontRootPage
 
   def create_elements
 
-    @dresses_link = add_button(:dresses, element_type: :link, xpath: "//div[@id='block_top_menu']/ul/li[2]/a")
+    @dresses_button = add_button(:dresses, element_type: :link, xpath: "//div[@id='block_top_menu']/ul/li[2]/a")
 
-    @casual_dresses_link = add_button(:casual_dresses, element_type: :link, xpath: "//*[@id='block_top_menu']/ul/li[2]/ul/li[1]/a")
-    @casual_dresses_link.deactivate
+    @casual_dresses_button = add_button(:casual_dresses, element_type: :link, xpath: "//div[@id='block_top_menu']/ul/li[2]/ul/li[1]/a")
+    @casual_dresses_button.deactivate
 
-    @dresses_link.on_hover do
-      @casual_dresses_link.activate
+    @dresses_button.on_hover do
+      @casual_dresses_button.activate
     end
 
     add_static_text(:phone_info, element_type: :span, class: 'shop-phone')
@@ -25,8 +25,8 @@ class HomePage < ExampleStorefrontRootPage
   end
 
   def navigate_to_casual_via_hover
-    @dresses_link.hover
-    @casual_dresses_link.click
+    @dresses_button.hover
+    @casual_dresses_button.click
   end
 
 end
