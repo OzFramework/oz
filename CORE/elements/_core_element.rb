@@ -69,6 +69,22 @@ class CoreElement
     @on_click = block
   end
 
+  def hover
+    assert_active
+    @world.logger.action "Hovering over [#{@name}]"
+    begin
+      watir_element.hover
+    rescue Watir::Exception::UnknownObjectException => e
+      @world.logger.warn 'Unable to hover over element, attempting to proceed anyway...'
+      return false
+    end
+    @on_hover.call if @on_hover
+  end
+
+  def on_hover(&block)
+    @on_hover = block
+  end
+
   def fill(data)
     @on_fill.call if @on_fill
   end
