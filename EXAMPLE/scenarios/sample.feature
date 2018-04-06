@@ -54,3 +54,16 @@ Feature: Test feature for the OZ framework
     Given I am on the Create Account Page
     When I fill the page with Data
     Then I can see that all the content on the page is correct
+
+
+  Scenario: Hover over Dresses Button on the Home page
+    Given I am on the Home Page
+    When I hover over the Dresses Button
+    Then I can see that all the content on the page is correct
+
+
+  Scenario: Navigating to the Casual Dresses page using the Dresses menu
+    Given I am on the Home Page
+      And I hover over the Dresses Button
+    When I click the Casual Dresses Button
+    Then I should see the Casual Dresses Page
