@@ -1,6 +1,7 @@
 class CreateAccountPage < ExampleStorefrontRootPage
 
   add_id_element(:h1, /CREATE AN ACCOUNT/, class: 'page-heading')
+  add_route(:MyAccountPage, :register_button, :fill)
 
   def create_elements
 
@@ -63,6 +64,8 @@ class CreateAccountPage < ExampleStorefrontRootPage
     add_text_field(:home_phone, id: 'phone')
     add_text_field(:mobile_phone, id: 'phone_mobile')
     add_text_field(:address_alias, id: 'alias')
+
+    add_button(:register, id: 'submitAccount')
 
   end
 
