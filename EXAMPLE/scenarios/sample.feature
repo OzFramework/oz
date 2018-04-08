@@ -70,3 +70,29 @@ Feature: Test feature for the OZ framework
   Scenario: Static text on the My Account Page
     Given I am on the Order History Page
     Then I can see that all the content on the page is correct
+
+
+  Scenario: Hover over Dresses Button on the Home page
+    Given I am on the Home Page
+    When I hover over the Dresses Button
+    Then I can see that all the content on the page is correct
+
+
+  Scenario: Navigating to the Casual Dresses page using the Dresses menu
+    Given I am on the Home Page
+      And I hover over the Dresses Button
+    When I click the Casual Dresses Button
+    Then I should see the Casual Dresses Page
+
+
+  Scenario Outline: Navigation on the My Account Page
+    Given I am on the My Account Page
+    Then I click the <account option>
+
+  Examples:
+    | account option                 |
+    | order history button           |
+    | my credit slips button         |
+    | my addresses button            |
+    | my personal information button |
+    | my wishlists button            |
