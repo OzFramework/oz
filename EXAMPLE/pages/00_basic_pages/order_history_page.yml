@@ -1,0 +1,3 @@
+EXPECTED_DATA:
+  DEFAULT:
+    :description_static_text: "Here are the orders you've placed since your account was created."
