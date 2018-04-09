@@ -141,7 +141,7 @@ class CoreElement
   def validate(data)
     if active
       validation_point = @world.validation_engine.add_validation_point("Checking that [#{@name}] is displayed...")
-      if visible? == true
+      if visible?
         validation_point.pass
         flash
       else
@@ -149,10 +149,10 @@ class CoreElement
       end
     else
       validation_point = @world.validation_engine.add_validation_point("Checking that [#{@name}] is not displayed...")
-      if visible? == false
-        validation_point.pass
-      else
+      if visible?
         validation_point.fail("ERROR! [#{@name}] was found on the page!\n\tFOUND: #{@name}\n\tEXPECTED: Element should not be displayed!")
+      else
+        validation_point.pass
       end
     end
   end

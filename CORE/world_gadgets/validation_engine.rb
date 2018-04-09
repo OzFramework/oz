@@ -9,7 +9,7 @@ class ValidationPoint
     @fail_message = nil
   end
 
-  def pass()
+  def pass
     @validation_engine.complete_validation_point(:pass)
   end
 
@@ -31,16 +31,18 @@ class ValidationEngine
   end
 
 
-  def enter_validation_mode()
+  def enter_validation_mode
     @validation_mode_on = true
     #TODO: Fail if this is already set
   end
 
-  def exit_validation_mode()
+  def exit_validation_mode
     @validation_mode_on = false
     if @failed_points.length > 0
-      message = "ERROR: [#{@failed_points.length}] validation points failed!\n"
+      message = "ERROR: [#{@failed_points.length}] of [#{@visited_points.length}] validation points failed!\n"
+      @world.logger.validation_fail(message)
       @failed_points.each do |point|
+        @world.logger.validation_fail("#{point.fail_message}\n")
         message << point.fail_message << "\n"
       end
       raise message
