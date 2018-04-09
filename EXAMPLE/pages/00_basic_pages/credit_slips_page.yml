@@ -1,0 +1,3 @@
+EXPECTED_DATA:
+  DEFAULT:
+    :description_static_text: "Credit slips you have received after canceled orders."
