@@ -83,6 +83,17 @@ Feature: Test feature for the OZ framework
     Then I can see that all the content on the page is correct
 
 
+  Scenario: Navigating from My Account Page to the My Addresses Page
+    Given I am on the My Account Page
+    When I click the My Addresses Button
+    Then I should see the My Addresses Page
+
+
+  Scenario: Static text on the My Addresses Page
+    Given I am on the My Addresses Page
+    Then I can see that all the content on the page is correct
+
+
   Scenario: Hover over Dresses Button on the Home page
     Given I am on the Home Page
     When I hover over the Dresses Button
