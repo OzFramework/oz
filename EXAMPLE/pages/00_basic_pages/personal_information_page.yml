@@ -1,0 +1,4 @@
+EXPECTED_DATA:
+  DEFAULT:
+    :update_information_static_text: "Please be sure to update your personal information if it has changed."
+    :required_field_static_text: "*Required field"
