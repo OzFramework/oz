@@ -33,7 +33,6 @@ class ValidationEngine
 
   def enter_validation_mode
     @validation_mode_on = true
-    #TODO: Fail if this is already set
   end
 
   def exit_validation_mode
@@ -70,6 +69,18 @@ class ValidationEngine
       @failed_points.push(@current_point)
     end
     @current_point = nil
+  end
+
+  def cleanup_validation_engine
+    @world.logger.debug('Cleaning up Validation Engine...')
+
+    if @visited_points.empty?
+      error_message = "ERROR: No validation points were created! This test didn't actually TEST anything!"
+      @world.logger.validation_fail error_message
+      raise error_message
+    end
+
+    @world.logger.debug("Test completed with #{@visited_points.length} validation checks.")
   end
 
 end

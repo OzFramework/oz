@@ -28,6 +28,7 @@ module CoreWorld
 
     def cleanup_world
         @browser.close if @configuration['CLOSE_BROWSER']
+        @validation_engine.cleanup_validation_engine
         @ledger.print_all if @configuration['PRINT_LEDGER']
     end
 
