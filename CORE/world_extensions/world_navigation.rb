@@ -21,6 +21,20 @@ module WorldNavigation
             @current_page.on_page_load
         end
     end
+
+    def validate_application_is_on_page(page_class)
+      @validation_engine.enter_validation_mode
+      validation_point = @validation_engine.add_validation_point("Validating that application is on page [#{page_class}]")
+
+      begin
+        assert_and_set_page(page_class)
+        validation_point.pass
+      rescue => error
+        validation_point.fail(error.message)
+      end
+      @validation_engine.exit_validation_mode
+    end
+
 end
 
 append_to_world(WorldNavigation)

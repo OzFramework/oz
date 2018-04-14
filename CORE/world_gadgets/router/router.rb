@@ -30,7 +30,7 @@ class Router
   end
 
   def assert_application_is_on_page(page_class)
-    @world.logger.validation "Ensuring that application is on page [#{page_class}]"
+    @world.logger.debug "Ensuring that application is on page [#{page_class}]"
 
     unless CoreUtils.wait_until(3){application_is_on_page?(page_class)}
       @world.logger.debug "Application was not on the [#{page_class}], attempting to find current page"
