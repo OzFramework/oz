@@ -26,6 +26,12 @@ Feature: Test the content on each of the catalog pages
     Then I should see the Personal Information Page
 
 
+  Scenario: Navigating from the My Account Page to the My Wishlists Page
+    Given I am on the My Account Page
+    When I click the my wishlists Button
+    Then I should see the My Wishlists Page
+
+
   Scenario Outline: Navigation on the My Account Page
     Given I am on the My Account Page
     When I click the <account option> button
@@ -37,4 +43,4 @@ Feature: Test the content on each of the catalog pages
     | my credit slips         | Credit Slips         |
     | my addresses            | My Addresses         |
     | my personal information | Personal Information |
-#    | my wishlists            | My Wishlists         | #TODO: Add this page
+    | my wishlists            | My Wishlists         |
