@@ -5,6 +5,7 @@ class MyAccountPage < ExampleStorefrontRootPage
   add_route(:CreditSlipsPage, :my_credit_slips_button)
   add_route(:MyAddressesPage, :my_addresses_button)
   add_route(:PersonalInformationPage, :my_personal_information_button)
+  add_route(:MyWishlistsPage, :my_wishlists_button)
 
   def create_elements
 

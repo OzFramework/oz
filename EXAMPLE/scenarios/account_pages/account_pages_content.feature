@@ -48,3 +48,8 @@ Feature: Test the content on each of the account pages
     Then I can see that all the content on the page is correct
 
 
+  Scenario: Static text on the My Wishlists Page
+    Given I am on the My Wishlists Page
+    Then I can see that all the content on the page is correct
+
+
