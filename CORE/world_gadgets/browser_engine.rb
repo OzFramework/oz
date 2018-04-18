@@ -19,6 +19,7 @@ class BrowserEngine
         raise "ERROR: No browser specified in configuration!\n" if @world.configuration['BROWSER'].nil?
         raise "ERROR: Browser #{@world.configuration['BROWSER']} is not supported!\n"
     end
+    @world.browser.window.maximize if @world.configuration['MAXIMIZE_BROWSER']
   end
 
   def chrome_browser
