@@ -10,7 +10,7 @@ class CorePage
     def self.inherited(subclass)
         subclass.parent_classes = [self] - [CorePage]
         subclass.parent_classes += self.parent_classes if self.parent_classes
-        RouterStore.store_page_spec(subclass, subclass.parent_classes)
+        RouterStore.store_page_blueprint(subclass, subclass.parent_classes)
         super
     end
 
