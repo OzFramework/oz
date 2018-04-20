@@ -61,4 +61,8 @@ class BrowserEngine
     return Watir::Browser.new(:firefox, driver_path: path)
   end
 
+  def cleanup
+    @browser.close if @world.configuration['CLOSE_BROWSER']
+  end
+
 end
