@@ -71,7 +71,7 @@ class ValidationEngine
     @current_point = nil
   end
 
-  def cleanup_validation_engine
+  def cleanup
     @world.logger.debug('Cleaning up Validation Engine...')
 
     if @visited_points.empty?
