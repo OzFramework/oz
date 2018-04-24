@@ -3,7 +3,7 @@ class Router
 
   def initialize(world)
     @world = world
-    @page_specs = RouterStore.generate_graph(@world)
+    @page_blueprints = RouterStore.generate_graph(@world)
     create_dot_file_from_graph if @world.configuration['CREATE_DOT_GRAPH']
   end
 
@@ -13,17 +13,17 @@ class Router
     timeout = 60 if @world.configuration["BROWSER"] == "internet_explorer"
 
     start_time = Time.now()
-    CoreUtils.wait_until(timeout) { @page_specs[target_page].done_waiting? }
+    CoreUtils.wait_until(timeout) { @page_blueprints[target_page].done_waiting? }
     @world.logger.debug "Page loaded after [#{(Time.now - start_time).round(0)}] seconds"
   end
 
   def application_is_on_page?(page_class)
     @world.logger.debug "Attempting to ID page [#{page_class}]"
-    @page_specs[page_class].id_page
+    @page_blueprints[page_class].id_page
   end
 
   def find_current_page
-    @page_specs.keys.each do |page_class|
+    @page_blueprints.keys.each do |page_class|
       return page_class if application_is_on_page?(page_class)
     end
     return "Could not find current page!"
@@ -42,11 +42,11 @@ class Router
   def get_routes_between(start_page, destination_page, visited_page_paths = { start_page => [] }, open_pages = [])
     @world.logger.debug "Searching for path from [#{start_page}] to [#{destination_page}]..."
     current_path = visited_page_paths[start_page]
-    start_spec = @page_specs[start_page]
-    next_pages = start_spec.connected_pages - visited_page_paths.keys
+    start_blueprint = @page_blueprints[start_page]
+    next_pages = start_blueprint.connected_pages - visited_page_paths.keys
 
     next_pages.each do |page|
-      route = start_spec.get_route_to(page)
+      route = start_blueprint.get_route_to(page)
       combined_path = current_path + [ route ]
 
       return combined_path if destination_page == page
@@ -64,8 +64,8 @@ class Router
 
       graph_file = File.open("page_graph.dot", "w")
       graph_file.write "digraph G {"
-      @page_specs.each_pair do |start_page, spec|
-          spec.routes.each_pair do |action, route|
+      @page_blueprints.each_pair do |start_page, blueprint|
+          blueprint.routes.each_pair do |action, route|
               graph_file.write "#{start_page} -> #{route.target_page}[color=\"green\", label=\"#{route.action}\"];\n" unless route.target_page == start_page
           end
       end

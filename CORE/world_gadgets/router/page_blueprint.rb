@@ -1,5 +1,5 @@
 
-class PageSpec
+class PageBlueprint
 
   attr_accessor :source_page, :parents, :routes, :id_elements, :wait_elements
 
@@ -14,7 +14,7 @@ class PageSpec
   end
 
   def empty_copy
-    PageSpec.new(@source_page, @parents)
+    PageBlueprint.new(@source_page, @parents)
   end
 
   def inherit_details(parent_page)

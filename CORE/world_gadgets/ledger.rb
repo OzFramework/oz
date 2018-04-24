@@ -86,4 +86,8 @@ class Ledger
         print "\n==========================\n"
     end
 
+  def cleanup
+      print_all if @world.configuration['PRINT_LEDGER']
+  end
+
 end
