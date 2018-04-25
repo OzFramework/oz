@@ -4,6 +4,7 @@
   "BROWSER": "chrome",
   "CREATE_DOT_GRAPH": true,
   "MAXIMIZE_BROWSER": false,
+  "RESIZE_BROWSER": false,
   "CLOSE_BROWSER": true,
   "PRINT_LEDGER": true,
   "HEADLESS_CHROME": false,
