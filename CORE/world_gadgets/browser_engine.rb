@@ -19,6 +19,15 @@ class BrowserEngine
         raise "ERROR: No browser specified in configuration!\n" if @world.configuration['BROWSER'].nil?
         raise "ERROR: Browser #{@world.configuration['BROWSER']} is not supported!\n"
     end
+    maximize if @world.configuration['MAXIMIZE_BROWSER']
+    if @world.configuration['RESIZE_BROWSER']
+      begin
+        width, height = @world.configuration['RESIZE_BROWSER']
+        resize(width, height)
+      rescue => error
+        @world.logger.warn("WARNING: Could not resize the browser, make sure RESIZE_BROWSER option is set as an array with [width] set to first element and [height] set to second element. \n\tFull Error text: #{error.message}")
+      end
+    end
   end
 
   def chrome_browser
@@ -61,8 +70,16 @@ class BrowserEngine
     return Watir::Browser.new(:firefox, driver_path: path)
   end
 
+  def maximize
+    @world.browser.window.maximize
+  end
+
+  def resize(width, height)
+    @world.browser.window.resize_to(width, height)
+  end
+
   def cleanup
-    @browser.close if @world.configuration['CLOSE_BROWSER']
+    @world.browser.close if @world.configuration['CLOSE_BROWSER']
   end
 
 end
