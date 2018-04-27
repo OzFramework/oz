@@ -13,5 +13,6 @@ install:
 
 script:
   - cd EXAMPLE
-  - ruby setup.rb
+  - HEADLESS_CHROME=true
+  - cucumber -p example
   - ruby -e "puts 'OZ BUILD COMPLETED'"
