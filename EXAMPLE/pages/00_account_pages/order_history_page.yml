@@ -1,5 +1,5 @@
 EXPECTED_DATA:
   DEFAULT:
-    :title_static_text: "ORDER HISTORY"
+    :title_static_text: "ORDER HISTERY"
     :description_static_text: "Here are the orders you've placed since your account was created."
     :no_orders_static_text: "You have not placed any orders."

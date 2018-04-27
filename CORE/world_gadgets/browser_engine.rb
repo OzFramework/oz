@@ -79,7 +79,7 @@ class BrowserEngine
   end
 
   def cleanup
-    @world.browser.close if @world.configuration['CLOSE_BROWSER']
+    @world.browser.close if @world.configuration['CLOSE_BROWSER'] and @world.browser
   end
 
 end
