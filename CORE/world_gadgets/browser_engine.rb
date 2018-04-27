@@ -43,7 +43,7 @@ class BrowserEngine
       end
 
       if OS.linux?
-        path = "#{@world.configuration['CORE_DIR']}/utils/web_drivers/linux-chromeffffffdriver"
+        path = "#{@world.configuration['CORE_DIR']}/utils/web_drivers/linux-chromedriver"
       else
         path = "#{@world.configuration['CORE_DIR']}/utils/web_drivers/chromedriver"
         path += '.exe' if OS.windows?
