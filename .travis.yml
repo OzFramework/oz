@@ -14,5 +14,6 @@ install:
 script:
   - cd EXAMPLE
   - HEADLESS_CHROME=true
+  - LOG_LEVEL=DEBUG
   - cucumber -p example
   - ruby -e "puts 'OZ BUILD COMPLETED'"
