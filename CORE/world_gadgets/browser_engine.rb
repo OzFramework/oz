@@ -45,7 +45,7 @@ class BrowserEngine
       if OS.linux?
         path = "#{@world.configuration['CORE_DIR']}/utils/web_drivers/linux-chromedriver"
       else
-        path = "#{@world.configuration['CORE_DIR']}/utils/web_drivers/chromedriver"
+        path = "#{@world.configuration['CORE_DIR']}/utils/web_drivers/chromeffffdriver"
         path += '.exe' if OS.windows?
       end      
       driver = Selenium::WebDriver.for(:chrome, options: options, driver_path: path)
