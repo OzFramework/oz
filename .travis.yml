@@ -14,5 +14,5 @@ script:
   - cd EXAMPLE
   - export HEADLESS_CHROME=true
   - export LOG_LEVEL=DEBUG
-  - xvfb-run cucumber -p example
+  - cucumber -p example
   - ruby -e "puts 'OZ BUILD COMPLETED'"
