@@ -19,8 +19,9 @@ script:
   - cd ..
 
 after_success:
-  - ls
+  - chmod +x send_discord_webhook.sh
   - ./send_discord_webhook.sh success $WEBHOOK_URL
 
 after_failure:
+  - chmod +x send_discord_webhook.sh
   - ./send_discord_webhook.sh failure $WEBHOOK_URL
