@@ -1,0 +1,27 @@
+language: ruby
+sudo: required
+rvm:
+  - 2.4.0
+
+addons:
+  chrome: stable
+
+install:
+  - gem install cucumber
+  - gem install watir
+
+script:
+  - cd EXAMPLE
+  - export HEADLESS_CHROME=true
+  - export LOG_LEVEL=DEBUG
+  - cucumber -p example
+  - echo "OZ BUILD COMPLETED"
+  - cd ..
+
+after_success:
+  - chmod +x send_discord_webhook.sh
+  - ./send_discord_webhook.sh success $WEBHOOK_URL
+
+after_failure:
+  - chmod +x send_discord_webhook.sh
+  - ./send_discord_webhook.sh failure $WEBHOOK_URL
