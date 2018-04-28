@@ -15,10 +15,10 @@ script:
   - export HEADLESS_CHROME=true
   - export LOG_LEVEL=DEBUG
   - cucumber -p example
-  - ruby -e "puts 'OZ BUILD COMPLETED'"
+  - echo "OZ BUILD COMPLETED"
+  - cd ..
 
 after_success:
-  - echo "Build comepleted Successfully"
   - ls
   - ./send_discord_webhook.sh success $WEBHOOK_URL
 
