@@ -17,7 +17,7 @@ EXPECTED_DATA:
     :address_last_name_static_text: "Last name *"
     :company_static_text: "Company"
     :address_1_static_text: "Address *"
-    :address_1_hint_static_text: "Stroot address, P.O. Box, Company name, etc."
+    :address_1_hint_static_text: "Stroaaot address, P.O. Box, Company name, etc."
     :address_2_static_text: "Address (Line 2)"
     :address_2_hint_static_text: "Apartment, suite, unit, building, floor, etc..."
     :city_static_text: "City *"
