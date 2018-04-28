@@ -19,7 +19,8 @@ script:
 
 after_success:
   - echo "Build comepleted Successfully"
-  - ../send_discord_webhook.sh success $WEBHOOK_URL
+  - ls
+  - ./send_discord_webhook.sh success $WEBHOOK_URL
 
 after_failure:
-  - ../send_discord_webhook.sh failure $WEBHOOK_URL
+  - ./send_discord_webhook.sh failure $WEBHOOK_URL
