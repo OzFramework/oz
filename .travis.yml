@@ -16,3 +16,8 @@ script:
   - export LOG_LEVEL=DEBUG
   - cucumber -p example
   - ruby -e "puts 'OZ BUILD COMPLETED'"
+
+after_success:
+  - ./send_discord_webhook.sh success $WEBHOOK_URL
+after_failure:
+  - ./send_discord_webhook.sh failure $WEBHOOK_URL
