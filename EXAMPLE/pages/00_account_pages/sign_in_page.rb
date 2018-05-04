@@ -3,6 +3,8 @@
 class SignInPage < ExampleStorefrontRootPage
 
   add_id_element(:h1, /AUTHENTICATION/, class: 'page-heading')
+
+  #TODO: Update the routing here with defaults
   # add_route(:MyAccountPage, :fill_already_registered)
   add_route(:CreateAccountPage, :fill_create_account)
 
