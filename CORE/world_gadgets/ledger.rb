@@ -41,6 +41,12 @@ class Ledger
         @filled_data[page_class][element_name]
     end
 
+    def get_page_values(page_class)
+      @world.logger.warn "[ERROR GETTING VALUE] page_class expected to be a Class! Instead was given a [#{page_class.class}]!" unless page_class.is_a? Class
+      return {} unless @filled_data[page_class]
+      @filled_data[page_class]
+    end
+
     def save_object(object_name, object)
         @objects[object_name] = object
         self.class.define_object object_name
@@ -77,10 +83,12 @@ class Ledger
             truncate = @world.configuration['LEDGER_TRUNCATION']
             if value.class == Hash
                 CoreUtils.recursively_print_hash(value, truncate, indent='    ')
+            elsif value.class < Struct
+              CoreUtils.recursively_print_hash(value.to_h, truncate, indent='    ')
             elsif value.class == Array
                 CoreUtils.recursively_print_array(value, truncate, indent='    ')
             else
-                print value
+                print "    #{value}\n"
             end
         end
         print "\n==========================\n"

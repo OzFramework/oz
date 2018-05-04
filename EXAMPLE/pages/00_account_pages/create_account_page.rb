@@ -1,7 +1,7 @@
 class CreateAccountPage < ExampleStorefrontRootPage
 
   add_id_element(:h1, /CREATE AN ACCOUNT/, class: 'page-heading')
-  add_route(:MyAccountPage, :register_button, :fill)
+  add_route(:MyAccountPage, :register_account, :fill)
 
   def create_elements
 
@@ -65,7 +65,53 @@ class CreateAccountPage < ExampleStorefrontRootPage
     add_text_field(:mobile_phone, id: 'phone_mobile')
     add_text_field(:address_alias, id: 'alias')
 
-    add_button(:register, id: 'submitAccount')
+    @register_button = add_button(:register, id: 'submitAccount')
+
+  end
+
+  def register_account
+    @register_button.click
+
+    page_values = @world.ledger.get_page_values(self.class)
+
+    user_dob = UserDOB.new(
+      page_values[:dob_day_select_list],
+      page_values[:dob_month_select_list],
+      page_values[:dob_year_select_list]
+    )
+
+    user_preferences = UserPreferences.new(
+      page_values[:newsletter_checkbox],
+      page_values[:special_offers_checkbox]
+    )
+
+    user_address = UserAddress.new(
+      page_values[:address_alias_text_field],
+      page_values[:address_firstname_text_field],
+      page_values[:address_lastname_text_field],
+      page_values[:company_text_field],
+      page_values[:address_1_text_field],
+      page_values[:address_2_text_field],
+      page_values[:city_text_field],
+      page_values[:state_select_list],
+      page_values[:zip_text_field],
+      page_values[:country_select_list],
+      page_values[:additional_information_text_field],
+      page_values[:home_phone_text_field],
+      page_values[:mobile_phone_text_field]
+    )
+
+    current_user = CurrentUser.new(
+        @world.ledger.get_value(SignInPage, :email_create_text_field),
+        page_values[:first_name_text_field],
+        page_values[:last_name_text_field],
+        page_values[:mr_radio_button] == 'selected' ? :male : :female,
+        user_dob,
+        user_preferences,
+        [user_address]
+    )
+
+    @world.ledger.save_object(:current_user, current_user)
 
   end
 

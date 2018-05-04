@@ -17,6 +17,9 @@ module CoreUtils
       elsif value.class == Array
         print "#{indent}#{key} =>\n"
         recursively_print_array(value, truncate, indent+"    ")
+      elsif value.class < Struct
+        print "#{indent}#{key} =>\n"
+        recursively_print_hash(value.to_h, truncate, indent+"    ")
       else
         if truncate and value.respond_to? :size
           print "#{indent}#{key} => #{value.size > 50 ? value[0..50]+"..." : value}\n"
@@ -35,6 +38,8 @@ module CoreUtils
         recursively_print_array(item, truncate, indent+"    ")
       elsif item.class == Hash
         recursively_print_hash(item, truncate, indent+"    ")
+      elsif item.class < Struct
+        recursively_print_hash(item.to_h, truncate, indent+"    ")
       else
         if truncate and item.respond_to? :size
           print "#{indent}#{item.size > 50 ? item[0..50]+"..." : item}\n"
