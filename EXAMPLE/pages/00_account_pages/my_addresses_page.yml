@@ -1,5 +1,18 @@
 EXPECTED_DATA:
   DEFAULT:
+    :title_static_text: "MY ADDRESSES"
     :description_static_text: "Please configure your default billing and delivery addresses when placing an order. You may also add additional addresses, which can be useful for sending gifts or receiving an order at your office."
     :your_addresses_static_text: "Your addresses are listed below."
     :be_sure_to_update_static_text: "Be sure to update your personal information if it has changed."
+    :name_static_text: "HOME"
+    :fist_name_static_text: "Oz"
+    :last_name_static_text: "The Great"
+    :company_static_text: "Oz Tower"
+    :street_1_static_text: "100 E Main St"
+    :street_2_static_text: ""
+    :city_static_text: "Somewhere,"
+    :state_static_text: "Ohio"
+    :zip_static_text: "11111"
+    :country_static_text: "United States"
+    :phone_static_text: "5555555555"
+    :mobile_phone_static_text: ""
