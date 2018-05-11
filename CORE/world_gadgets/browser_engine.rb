@@ -1,7 +1,5 @@
-
-
 class BrowserEngine
-  
+
   def initialize(world)
     @world = world
   end
@@ -33,7 +31,7 @@ class BrowserEngine
   def chrome_browser
     if @world.configuration['USE_GRID']
       capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(chrome_options: {'detach' => true})
-      driver = Selenium::WebDriver.for(:remote, :url => @world.configuration['ENVIRONMENT']['GRID'] , desired_capabilities: capabilities)
+      driver = Selenium::WebDriver.for(:remote, :url => @world.configuration['ENVIRONMENT']['GRID'], desired_capabilities: capabilities)
     else
       options = Selenium::WebDriver::Chrome::Options.new
       if @world.configuration['HEADLESS_CHROME']
@@ -42,12 +40,16 @@ class BrowserEngine
         options.add_option(:detach, true)
       end
 
-      if OS.linux?
-        path = "#{@world.configuration['CORE_DIR']}/utils/web_drivers/linux-chromedriver"
+      if @world.configuration['DRIVER_LOCATION']
+        path = @world.configuration['DRIVER_LOCATION']
       else
-        path = "#{@world.configuration['CORE_DIR']}/utils/web_drivers/chromedriver"
-        path += '.exe' if OS.windows?
-      end      
+        if OS.linux?
+          path = "#{@world.configuration['CORE_DIR']}/utils/web_drivers/linux-chromedriver"
+        else
+          path = "#{@world.configuration['CORE_DIR']}/utils/web_drivers/chromedriver"
+          path += '.exe' if OS.windows?
+        end
+      end
       driver = Selenium::WebDriver.for(:chrome, options: options, driver_path: path)
     end
     return Watir::Browser.new(driver)
