@@ -12,8 +12,6 @@ page_graph.dot
 #Visual studio code configs
 .vscode
 
-#Bundler config
+#Bundler config, binstubs and such
 .bundle
-
-#Bundle binstubs and such
 bin
