@@ -8,3 +8,10 @@ results.json
 #Oz output files
 debug.log
 page_graph.dot
+
+#Visual studio code configs
+.vscode
+
+#Bundler config, binstubs and such
+.bundle
+bin
