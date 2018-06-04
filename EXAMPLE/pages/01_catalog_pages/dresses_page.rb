@@ -11,6 +11,11 @@ class DressesPage < ExampleStorefrontBasePage
 
     add_static_text(:title, element_type: :h1, class: ['page-heading', 'product-listing'])
 
+    add_select_list(:product_sort, options: ['--', 'Price: Lowest first', 'Price: Highest first',
+                                          'Product Name: A to Z', 'Product Name: Z to A', 'In stock',
+                                          'Reference: Lowest first', 'Reference: Highest first'],
+                    id: 'selectProductSort')
+
   end
 
 end
