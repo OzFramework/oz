@@ -39,7 +39,7 @@ class CoreElement
   end
 
   def browser
-    @world.browser
+    @options[:parent] ? @options[:parent].watir_element : @world.browser
   end
 
   def watir_element
