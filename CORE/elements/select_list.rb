@@ -22,6 +22,6 @@ class SelectListElement < CoreElement
   end
 
   def watir_element
-    @watir_element ||= browser.select(@locator_hash)
+    @watir_element ||= parent.select(@locator_hash)
   end
 end

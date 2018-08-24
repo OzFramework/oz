@@ -8,7 +8,7 @@ class IFrameElement < CoreElement
   end
 
   def watir_element
-    @watir_element ||= browser.iframe(@locator_hash)
+    @watir_element ||= parent.iframe(@locator_hash)
   end
 
 end

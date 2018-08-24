@@ -39,11 +39,15 @@ class CoreElement
   end
 
   def browser
-    @options[:parent] ? @options[:parent].watir_element : @world.browser
+    @world.browser
+  end
+
+  def parent
+    @options[:parent] ? @options[:parent].watir_element : browser
   end
 
   def watir_element
-    @watir_element ||= browser.send(@element_type, @locator_hash)
+    @watir_element ||= parent.send(@element_type, @locator_hash)
   end
 
   def assign_element_type

@@ -28,6 +28,6 @@ class RadioButtonElement < CoreElement
   end
 
   def watir_element
-    @watir_element ||= browser.radio(@locator_hash)
+    @watir_element ||= parent.radio(@locator_hash)
   end
 end

@@ -23,7 +23,7 @@ class CheckboxElement < CoreElement
   end
 
   def watir_element
-    @watir_element ||= browser.checkbox(@locator_hash)
+    @watir_element ||= parent.checkbox(@locator_hash)
   end
 
   def value

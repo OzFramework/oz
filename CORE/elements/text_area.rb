@@ -8,7 +8,7 @@ class TextAreaElement < CoreElement
     end
 
     def watir_element
-        @watir_element ||= browser.textarea(@locator_hash)
+        @watir_element ||= parent.textarea(@locator_hash)
     end
 
     def value
