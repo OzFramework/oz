@@ -94,13 +94,14 @@ class CoreElement
   end
 
   def visible?
-    return false unless watir_element.exists?
-    begin
-      return watir_element.visible?
-    rescue Watir::Exception::UnknownObjectException => e
-      @world.logger.warn 'Object not found during visibility check, proceeding anyway...'
-      return false
-    end
+    # return false if watir_element.stale?
+    # begin
+    #   return watir_element.visible?
+    # rescue Watir::Exception::UnknownObjectException => e
+    #   @world.logger.warn 'Object not found during visibility check, proceeding anyway...'
+    #   return false
+    # end
+    watir_element.present?
   end
 
   def flash
