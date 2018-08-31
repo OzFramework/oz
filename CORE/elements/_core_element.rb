@@ -100,10 +100,9 @@ class CoreElement
 
   def present?
     begin
-      watir_element.wait_until_present(timeout:1)
+      watir_element.wait_until_present(timeout:0)
       return true
     rescue Watir::Wait::TimeoutError => e
-      @world.logger.warn 'Object not found during visibility check, proceeding anyway...'
       return false
     end
   end
