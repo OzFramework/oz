@@ -15,6 +15,12 @@ module CoreWorld
         @validation_engine = ValidationEngine.new(self)
         log_header
         set_data_target
+        set_default_watir_timeout
+    end
+
+    def set_default_watir_timeout
+      require 'Watir'
+      Watir.default_timeout = @configuration['DEFAULT_ELEMENT_TIMEOUT']
     end
 
     def set_root_page(page_class)
