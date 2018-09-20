@@ -19,7 +19,6 @@ module CoreWorld
     end
 
     def set_default_watir_timeout
-      require 'Watir'
       Watir.default_timeout = @configuration['DEFAULT_ELEMENT_TIMEOUT']
     end
 
