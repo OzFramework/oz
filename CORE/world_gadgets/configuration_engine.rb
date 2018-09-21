@@ -20,9 +20,8 @@ class ConfigurationEngine
     @config_data.keys.each do |option_name|
       if ENV[option_name]
         puts "Loading value [#{ENV[option_name]}] for ENV variable [#{option_name}] from system environment."
-        bool_map = { "true"=>true, "false"=>false }
-        option_value = bool_map.keys.include?(ENV[option_name]) ? bool_map[ENV[option_name]] : ENV[option_name]
-        @config_data[option_name] = option_value
+        @config_data[option_name] = ENV[option_name]=='true' ? true : ENV[option_name]
+        @config_data[option_name] = ENV[option_name]=='false' ? false : ENV[option_name]
       end
     end
     @config_data['CLOSE_BROWSER'] = true if @config_data['USE_GRID']
