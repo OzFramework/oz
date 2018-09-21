@@ -8,7 +8,7 @@ class TextFieldElement < CoreElement
     end
 
     def watir_element
-        @watir_element ||= browser.text_field(@locator_hash)
+        @watir_element ||= parent.text_field(@locator_hash)
     end
 
     def value

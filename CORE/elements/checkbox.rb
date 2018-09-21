@@ -14,7 +14,7 @@ class CheckboxElement < CoreElement
     watir_element.set(checked)
 
     begin
-      Watir::Wait.until(1){watir_element.set? == checked}
+      Watir::Wait.until(timeout: 1){watir_element.set? == checked}
     rescue
       raise "ERROR: Problem filling element [#{@name}] with [#{data}] value after fill was found as [#{watir_element.value}]"
     end
@@ -23,7 +23,7 @@ class CheckboxElement < CoreElement
   end
 
   def watir_element
-    @watir_element ||= browser.checkbox(@locator_hash)
+    @watir_element ||= parent.checkbox(@locator_hash)
   end
 
   def value

@@ -45,4 +45,8 @@ class CorePage
     def add_checkbox(name, options)
         add_element(name, options, CheckboxElement)
     end
+
+    def add_iframe(name, options)
+        add_element(name, options, IFrameElement)
+    end
 end
