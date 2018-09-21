@@ -94,11 +94,15 @@ class CoreElement
   end
 
   def visible?
-    return false unless watir_element.exists?
+    @world.logger.warn '[OZ DEPRECATION] Checking `#visisble?` is deprecated. Use `#present?` instead.'
+    present?
+  end
+
+  def present?
     begin
-      return watir_element.visible?
-    rescue Watir::Exception::UnknownObjectException => e
-      @world.logger.warn 'Object not found during visibility check, proceeding anyway...'
+      watir_element.wait_until_present(timeout:0)
+      return true
+    rescue Watir::Wait::TimeoutError => e
       return false
     end
   end
@@ -111,6 +115,7 @@ class CoreElement
 
   def value
     assert_active
+    return nil unless present?
     watir_element.text
   end
 
@@ -141,7 +146,7 @@ class CoreElement
   def validate(data)
     if active
       validation_point = @world.validation_engine.add_validation_point("Checking that [#{@name}] is displayed...")
-      if visible?
+      if present?
         validation_point.pass
         flash
       else
@@ -149,7 +154,7 @@ class CoreElement
       end
     else
       validation_point = @world.validation_engine.add_validation_point("Checking that [#{@name}] is not displayed...")
-      if visible?
+      if present?
         validation_point.fail("ERROR! [#{@name}] was found on the page!\n\tFOUND: #{@name}\n\tEXPECTED: Element should not be displayed!")
       else
         validation_point.pass

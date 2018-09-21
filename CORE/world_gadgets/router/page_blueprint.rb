@@ -48,9 +48,9 @@ class PageBlueprint
 
     @id_elements.each do |item|
       if item[:action] == :not_visible
-        return false if item[:element].visible?
+        return false if item[:element].present?
       else
-        return false unless (item[:element].visible? and item[:element].value =~ item[:action])
+        return false unless (item[:element].value =~ item[:action])
       end
     end
 
@@ -60,12 +60,12 @@ class PageBlueprint
   def done_waiting?
     done_waiting = true
     @wait_elements.each do |item|
-      element_visible = item[:element].visible?
+      element_present = item[:element].present?
 
       if item[:action] == :wait_until_present
-        done_waiting = false unless element_visible
+        done_waiting = false unless element_present
       else
-        done_waiting = false if element_visible
+        done_waiting = false if element_present
       end
     end
     return done_waiting

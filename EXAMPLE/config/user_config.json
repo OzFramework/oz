@@ -9,5 +9,6 @@
   "PRINT_LEDGER": true,
   "HEADLESS_CHROME": false,
   "FLASH_VALIDATION": false,
-  "DRIVER_LOCATION": false
+  "DRIVER_LOCATION": false,
+  "DEFAULT_ELEMENT_TIMEOUT": 5
 }
