@@ -16,7 +16,7 @@ class HomePage < ExampleStorefrontRootPage
 
     @dresses_button.on_hover do
       @casual_dresses_button.activate
-      CoreUtils.wait_until(3) { @casual_dresses_button.visible? }
+      CoreUtils.wait_until(3) { @casual_dresses_button.present? }
     end
 
     add_static_text(:phone_info, element_type: :span, class: 'shop-phone')
