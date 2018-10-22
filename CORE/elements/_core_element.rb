@@ -34,6 +34,7 @@ class CoreElement
     @world = world
     @options = {:active => true}.merge(options)
     @active = @options[:active]
+    @clear = @options[:clear] ? true : false
 
     assign_element_type
   end
