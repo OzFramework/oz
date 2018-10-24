@@ -13,7 +13,7 @@ class CoreElement
     @@locator_options
   end
 
-  attr_reader :name, :active, :locator_hash, :type
+  attr_reader :name, :active, :locator_hash, :type, :state
 
 
   ### Attrib Methods ###
@@ -32,8 +32,9 @@ class CoreElement
     raise "ELEMENT [#{name}] must have a locator!/nValid locators are: #{@@locator_options}" unless has_locator
 
     @world = world
-    @options = {:active => true}.merge(options)
+    @options = {:active => true, :state => 'enabled'}.merge(options)
     @active = @options[:active]
+    @state = @options[:state]
 
     assign_element_type
   end
@@ -142,9 +143,41 @@ class CoreElement
   def active?
     @active
   end
-  
+
   def activate_if(condition)
     condition ? activate : deactivate
+  end
+
+  def state?
+    @state
+  end
+
+  def enable
+    @state = 'enabled'
+  end
+
+  def disable
+    @state = 'disabled'
+  end
+
+  def disable_if(condition)
+    condition ? disable : enable
+  end
+
+  def enable_if(condition)
+    condition ? enable : disable
+  end
+
+  def assert_enabled
+    raise "ERROR: Element [#{@name}] being accessed when not enabled!!\n" unless @active
+  end
+
+  def watir_enabled?
+    begin
+      return watir_element.enabled?
+    rescue Watir::Wait::TimeoutError => e
+      return false
+    end
   end
 
   def validate(data)
@@ -162,6 +195,15 @@ class CoreElement
         validation_point.fail("ERROR! [#{@name}] was found on the page!\n\tFOUND: #{@name}\n\tEXPECTED: Element should not be displayed!")
       else
         validation_point.pass
+      end
+    end
+    if active && state? == 'disabled'
+      validation_point = @world.validation_engine.add_validation_point("Checking that [#{name}] is disabled...")
+      if !watir_enabled?
+        validation_point.pass
+        flash
+      else
+        validation_point.fail("ERROR! [#{@name}] was found to be enabled!\n\tFOUND: #{name} is enabled\n\tEXPECTED: #{@name} should be disabled!")
       end
     end
   end
