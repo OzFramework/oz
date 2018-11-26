@@ -14,3 +14,4 @@ recursively_require_all_edge_pages("../#{OZ_APP_NAME}/pages")
 require_all("../#{OZ_APP_NAME}/step_definitions") if defined?(Cucumber)
 require_all("../#{OZ_APP_NAME}/spec/helpers") if defined?(RSpec::ExampleGroups)
 require_all("../#{OZ_APP_NAME}/spec/hooks") if defined?(RSpec::ExampleGroups)
+
