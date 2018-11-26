@@ -1,0 +1,5 @@
+--require ./support/_setup.rb
+--require spec_helper
+--format html --out results.html
+--format json --out results.json
+--no-color

@@ -1,6 +1,6 @@
 {
   "TEST_ENVIRONMENT": "default",
-  "LOG_LEVEL": "ACTION",
+  "LOG_LEVEL": "INFO",
   "BROWSER": "chrome",
   "CREATE_DOT_GRAPH": true,
   "MAXIMIZE_BROWSER": false,

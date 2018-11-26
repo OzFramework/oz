@@ -6,6 +6,18 @@ class Symbol
 end
 
 class String
+  def to_ruby_symbol
+    self.gsub(' ','_').downcase.to_sym
+  end
+end
+
+class Symbol
+  def to_ruby_symbol
+    self
+  end
+end
+
+class String
   def black;          "\e[30m#{self}\e[0m" end
   def red;            "\e[31m#{self}\e[0m" end
   def green;          "\e[32m#{self}\e[0m" end

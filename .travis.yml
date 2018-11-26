@@ -15,6 +15,7 @@ script:
   - export HEADLESS_CHROME=true
   - export LOG_LEVEL=DEBUG
   - cucumber -p example
+  - rspec
   - echo "OZ BUILD COMPLETED"
   - cd ..
 

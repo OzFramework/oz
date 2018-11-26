@@ -15,6 +15,11 @@ def append_to_world(module_name)
   if defined?(Cucumber)
     print "We are running cucumber, mixing #{module_name} into the [World] object!\n" if DEBUG_LOADING
     World(module_name)
+  elsif defined?(RSpec::ExampleGroups)
+    print "We are running RSpec, mixing #{module_name} into the [World] object!\n" if DEBUG_LOADING
+    RSpec.configure do |c|
+      c.include module_name
+    end
   else
     print "We are not running cucumber, mixing #{module_name} into an empty [$world] object!\n" if DEBUG_LOADING
     $world.extend(module_name)
@@ -60,3 +65,6 @@ require_relative('./elements/_core_element.rb')
 require_all('./pages')
 
 require_all('./step_definitions') if defined?(Cucumber)
+require_all("./spec/helpers") if defined?(RSpec::ExampleGroups)
+require_all("./spec/hooks") if defined?(RSpec::ExampleGroups)
+require_all("./spec/formatters") if defined?(RSpec::ExampleGroups)
