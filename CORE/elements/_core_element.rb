@@ -51,7 +51,10 @@ class CoreElement
   end
 
   def assign_element_type
-    @element_type = @options[:element_type] ? @options[:element_type] : :div
+    @element_type = @options[:element_type]
+    # Attempt to grab the element type from the xpath
+    @element_type ||= @options[:xpath].match(/(\w+)(?:\[[\w\-_=@"]+\])?$/)&.captures&.first if @options[:xpath]
+    @element_type ||= :div #default to div failing all else
   end
 
   ### Behavioral Methods ###
