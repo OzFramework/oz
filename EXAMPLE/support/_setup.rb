@@ -4,8 +4,8 @@ ENV['OZ_CONFIG_DIR'] = "config" if defined?(RSpec::ExampleGroups)
 
 require_relative '../../CORE/setup.rb'
 
-require_all("../#{OZ_APP_NAME}/overrides/elements")
-require_all("../#{OZ_APP_NAME}/data_models")
+require_all("../#{OZ_APP_NAME}/overrides/elements") unless defined?(Cucumber)
+require_all("../#{OZ_APP_NAME}/data_models") unless defined?(Cucumber)
 
 require_relative '../pages/example_storefront_root_page.rb'
 recursively_require_all_base_pages("../#{OZ_APP_NAME}/pages")
