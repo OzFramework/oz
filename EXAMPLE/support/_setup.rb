@@ -1,5 +1,5 @@
 OZ_APP_NAME = ENV['OZ_APP_NAME'] = 'EXAMPLE'
-ENV['OZ_CONFIG_DIR'] = "./#{OZ_APP_NAME}/config" if defined?(Cucumber)
+ENV['OZ_CONFIG_DIR'] = "../#{OZ_APP_NAME}/config" if defined?(Cucumber)
 ENV['OZ_CONFIG_DIR'] = "config" if defined?(RSpec::ExampleGroups)
 
 require_relative '../../CORE/setup.rb'
