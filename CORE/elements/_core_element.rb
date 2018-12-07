@@ -150,7 +150,7 @@ class CoreElement
   def validate(data)
     status = active ? 'is' : 'is not'
     validation_point = @world.validation_engine.add_validation_point("Checking that [#{@name}] #{status} displayed...")
-    if active == present
+    if active == present?
       validation_point.pass
       flash if active
     elsif !active && present?
