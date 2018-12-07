@@ -3,7 +3,7 @@ module CoreUtils
 
   def self.find_class(name)
     if name.class == String
-      name = name.gsub(/::(\w)| (\w)/, &:upcase).tr(' ','')
+      name = name.gsub(/::(\w)| (\w)/, {|match| match.upcase}).tr(' ','')
     end
     return Kernel.const_get(name)
   end
