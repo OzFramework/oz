@@ -148,21 +148,15 @@ class CoreElement
   end
 
   def validate(data)
-    if active
-      validation_point = @world.validation_engine.add_validation_point("Checking that [#{@name}] is displayed...")
-      if present?
-        validation_point.pass
-        flash
-      else
-        validation_point.fail("ERROR! [#{@name}] was not found on the page!\n\tFOUND: None\n\tEXPECTED: #{@name} should be displayed!")
-      end
+    status = active ? 'is' : 'is not'
+    validation_point = @world.validation_engine.add_validation_point("Checking that [#{@name}] #{status} displayed...")
+    if active == present?
+      validation_point.pass
+      flash if active
+    elsif !active && present?
+      validation_point.fail("  [#{@name}] was found on the page!\n       FOUND: #{@name}\n    EXPECTED: Element should not be displayed!")
     else
-      validation_point = @world.validation_engine.add_validation_point("Checking that [#{@name}] is not displayed...")
-      if present?
-        validation_point.fail("ERROR! [#{@name}] was found on the page!\n\tFOUND: #{@name}\n\tEXPECTED: Element should not be displayed!")
-      else
-        validation_point.pass
-      end
+      validation_point.fail("  [#{@name}] was not found on the page!\n       FOUND: None\n    EXPECTED: #{@name} should be displayed!")
     end
   end
 
