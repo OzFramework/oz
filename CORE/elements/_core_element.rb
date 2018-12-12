@@ -104,7 +104,11 @@ class CoreElement
 
   def present?
     begin
-      watir_element.wait_until_present(timeout:0)
+      if watir_element.located?
+        watir_element.wait_while(timeout:0, &:stale?)
+      else
+        watir_element.wait_until(timeout:0, &:present?)
+      end
       return true
     rescue Watir::Wait::TimeoutError => e
       return false
