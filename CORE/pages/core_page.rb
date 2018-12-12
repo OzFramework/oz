@@ -1,4 +1,4 @@
-
+require 'deep_merge'
 # CorePage will be the basis for all other pages we create,
 # there should be an instance of this page saved in the @world object upon each scenario's creation.
 # Eventually this page will become the recorder/basis for how we will record interactions with the DB and others.
@@ -60,12 +60,22 @@ class CorePage
     end
 
     def expected_data(data_name = "DEFAULT")
-        @world.data_engine.get_expected_data(yml_file, data_name)
+        clazz = @world.current_page.class
+        ancestors = clazz.ancestors
+        base_object_index = ancestors.each_with_index.find{|object, index| object == Object}[1]
+        our_ancestors = ancestors[0..base_object_index-1]
+        expected_values = {}
+        # Work our way up the ancestor chain deep merging each page that composed into the current page object, this is done so we can override expectations on
+        # elements for a given page
+        our_ancestors.reverse.each do |ancestor_class|
+             expected_values.deep_merge!(@world.data_engine.get_expected_data(yml_file(ancestor_class), data_name))
+        end
+        expected_values
     end
 
-    def yml_file
+    def yml_file(clazz = self.class)
         #The extra long gunk here basically just looks for the file that has the 'create_elements' method defined inside it and replaces the .rb extension with .yml
-        self.class.instance_method(:create_elements).source_location.first.gsub(/\.rb$/,".yml")
+        clazz.instance_method(:create_elements).source_location.first.gsub(/\.rb$/,".yml")
     end
 
     def browser

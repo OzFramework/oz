@@ -18,16 +18,19 @@ class DataEngine
 		        "\tNOTE: Could be from inherited page YML file\n"
       "\tORIGINAL MESSAGE: #{e.message}\n\n"
     rescue Errno::ENOENT => e
-      raise "ERROR: OZ could not parse this YML file!\n"\
+      warn "WARNING: OZ could not find this yaml file!\n"\
                 "\tMY FIRST GUESS: The path to this YML file is incorrect.\n"\
                 "\tMY SECOND GUESS: The yml file is missing.\n"\
+                "\tThis could mean the yaml file was not used for this page, if so the message can be ignored."
                 "\tYML_FILE: #{filename}\n"\
                 "\tORIGINAL MESSAGE: #{e.message}\n\n"
+      {}
     end
   end
 
   def get_yml_data(data_type, filename, data_name)
     raw_data = load_data_from_yml(filename)[data_type]
+    return {} unless raw_data # If this happens the yaml file wasn't defined, lets assume it's a file that didn't need one
     default_data = raw_data['DEFAULT']
     raise "DEFAULT key is empty for #{filename}!" if default_data == nil
     data = raw_data[data_name.upcase.gsub(' ','_')]
