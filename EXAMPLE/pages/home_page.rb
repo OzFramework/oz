@@ -27,11 +27,12 @@ class HomePage < ExampleStorefrontRootPage
   end
 
   def navigate_to(menu, sub_section)
+    sub_section_link = @elements[:"#{sub_section}_button"]
     hover_over :"#{menu}_button"
-    wait_for :"#{sub_section}_button"
-    activate :"#{sub_section}_button"
-    click_on :"#{sub_section}_button"
-    deactivate :"#{sub_section}_button"
+    CoreUtils.wait_until(3) {element.present?}
+    sub_section_link.activate
+    sub_section_link.click
+    sub_section_link.deactivate
   end
 
 end

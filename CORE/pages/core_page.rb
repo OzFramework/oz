@@ -36,20 +36,8 @@ class CorePage
         @elements[element_name].click
     end
 
-    def wait_for(element_name, timeout: 3)
-        CoreUtils.wait_until(timeout) { @elements[element_name].present? }
-    end
-
     def hover_over(element_name)
       @elements[element_name].hover
-    end
-
-    def activate(element_name)
-        @elements[element_name].activate
-    end
-
-    def deactivate(element_name)
-        @elements[element_name].deactivate
     end
 
     def validate_content
