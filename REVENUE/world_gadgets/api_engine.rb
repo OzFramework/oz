@@ -14,11 +14,11 @@ module ApiEngine
       #type can be put, post, get, delete, or head
       fail 'type should be a symbol' unless type.is_a?(Symbol)
 
-      request_info(endpoint, args)
+      payload_info(endpoint, args)
       @@response = HTTPI.request(type, @request, adapter = @adapter)
     end
 
-    def request_info(endpoint, args)
+    def payload_info(endpoint, args)
       unless args.empty?
         args = args[0]
         authenticate(args[:auth_type], args) unless args[:auth_type].nil?
@@ -27,8 +27,10 @@ module ApiEngine
         @request.headers = args[:headers] unless args[:headers].nil?
         @request.query = args[:query] unless args[:query].nil?
       end
-      #This is used to since we don't have any security :(
+      #This is used to bypass ssl certs
       @request.auth.ssl.verify_mode = :none
+      #TODO get ssl cert file working
+      #@request.auth.ssl.ca_cert_file = 'certificate.pem'
       @request.url = endpoint
     end
 
@@ -71,6 +73,6 @@ end
 
 call = ApiEngine::Rest.new
 # response = call.request('https://revenueenterpriseservices.int.igsenergy.net/BillingAccount/GetInformation', :post, body: '{"InvoiceGroupID" : 4899259}') #post example
-call.request('https://revenueenterpriseservices.int.igsenergy.net/Invoices/ExcelSummarySheetData/22644713', :get) #get example
+response = call.request('https://revenueenterpriseservices.int.igsenergy.net/Invoices/ExcelSummarySheetData/22644713', :get) #get example
 fail 'Response length must be greater than 0' unless call.hash_body['FileData'].length > 0 #get example validation
 fail "Call failed with #{call.code} response code" unless call.success_code?
