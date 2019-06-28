@@ -1,0 +1,5 @@
+EXPECTED_DATA:
+  DEFAULT:
+    :title_static_text: "CREDIT SLIPS"
+    :description_static_text: "Credit slips you have received after canceled orders."
+    :no_credit_slips_static_text: "You have not received any credit slips."

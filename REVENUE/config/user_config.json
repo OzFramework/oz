@@ -1,0 +1,14 @@
+{
+  "TEST_ENVIRONMENT": "default",
+  "LOG_LEVEL": "ACTION",
+  "BROWSER": "chrome",
+  "CREATE_DOT_GRAPH": true,
+  "MAXIMIZE_BROWSER": false,
+  "RESIZE_BROWSER": false,
+  "CLOSE_BROWSER": true,
+  "PRINT_LEDGER": true,
+  "HEADLESS_CHROME": false,
+  "FLASH_VALIDATION": false,
+  "DRIVER_LOCATION": false,
+  "DEFAULT_ELEMENT_TIMEOUT": 5
+}
