@@ -30,7 +30,7 @@ module ApiEngine
       #This is used to bypass ssl certs
       @request.auth.ssl.verify_mode = :none
       #TODO get ssl cert file working
-      #@request.auth.ssl.ca_cert_file = 'certificate.pem'
+      # @request.auth.ssl.ca_cert_file = __dir__ + '/ca_cert.pem'
       @request.url = endpoint
     end
 
@@ -53,10 +53,15 @@ module ApiEngine
       end
     end
 
-    ################RESPONSE SECTION####################
-    def hash_body
+    ################RESPONSE SECTION###################
+    def body_hash
       fail "Must have a proper request to return the #{__method__}" unless @response.nil?
       JSON.parse(@@response.body)
+    end
+
+
+    def response
+      @@response
     end
 
     ############VALIDATION SECTION#############
@@ -72,7 +77,7 @@ module ApiEngine
 end
 
 call = ApiEngine::Rest.new
-# response = call.request('https://revenueenterpriseservices.int.igsenergy.net/BillingAccount/GetInformation', :post, body: '{"InvoiceGroupID" : 4899259}') #post example
-response = call.request('https://revenueenterpriseservices.int.igsenergy.net/Invoices/ExcelSummarySheetData/22644713', :get) #get example
-fail 'Response length must be greater than 0' unless call.hash_body['FileData'].length > 0 #get example validation
+# call.request('https://revenueenterpriseservices.int.igsenergy.net/BillingAccount/GetInformation', :post, body: '{"InvoiceGroupID" : 4899259}') #post example
+call.request('https://revenueenterpriseservices.int.igsenergy.net/Invoices/ExcelSummarySheetData/22644713', :get) #get example
+fail 'Response length must be greater than 0' unless call.body_hash['FileData'].length > 0 #get example validation
 fail "Call failed with #{call.code} response code" unless call.success_code?
