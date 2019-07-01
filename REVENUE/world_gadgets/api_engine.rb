@@ -59,14 +59,15 @@ module ApiEngine
       JSON.parse(@@response.body)
     end
 
-
     def response
       @@response
     end
 
     ############VALIDATION SECTION#############
     def success_code?
-      @@response.code.between?(200, 299)
+      #this needs to be updated to include all success response codes
+      success_codes = *(200..299)
+      success_codes.include? @@response.code
     end
 
   end
@@ -80,4 +81,4 @@ call = ApiEngine::Rest.new
 # call.request('https://revenueenterpriseservices.int.igsenergy.net/BillingAccount/GetInformation', :post, body: '{"InvoiceGroupID" : 4899259}') #post example
 call.request('https://revenueenterpriseservices.int.igsenergy.net/Invoices/ExcelSummarySheetData/22644713', :get) #get example
 fail 'Response length must be greater than 0' unless call.body_hash['FileData'].length > 0 #get example validation
-fail "Call failed with #{call.code} response code" unless call.success_code?
+fail "Call failed with #{call.response.code} response code" unless call.success_code?
