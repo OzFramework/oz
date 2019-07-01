@@ -40,6 +40,18 @@ class CorePage
       @elements[element_name].hover
     end
 
+    def activate(element_name)
+        @elements[element_name].activate
+    end
+
+    def deactivate(element_name)
+        @elements[element_name].deactivate
+    end
+
+    def wait_for(element_name, timeout: 3)
+        CoreUtils.wait_until(timeout) { @elements[element_name].present? }
+    end
+
     def validate_content
         data = expected_data()
         raise ArgumentError, "ERROR: Method: [expected_data] of class [#{self.class}] should return a Hash\n" unless data.class == Hash
