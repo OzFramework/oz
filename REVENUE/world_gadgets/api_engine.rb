@@ -55,11 +55,12 @@ module ApiEngine
 
     ################RESPONSE SECTION###################
     def body_hash
-      fail "Must have a proper request to return the #{__method__}" unless !@response.nil?
+      fail "Must have a proper request to return the body" unless !@response.nil?
       JSON.parse(@response.body)
     end
 
     def response
+      #return full response exactly as it came back from the resource
       @response
     end
 
@@ -74,6 +75,7 @@ module ApiEngine
     ############VALIDATION SECTION#############
     def success_code?
       #this needs to be updated to include all success response codes
+      # '*' turns number range into an array
       success_codes = *(200..299)
       success_codes.include? @response.code
     end
