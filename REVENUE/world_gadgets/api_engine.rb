@@ -15,7 +15,7 @@ module ApiEngine
       fail 'type should be a symbol' unless type.is_a?(Symbol)
 
       payload_info(endpoint, args)
-      @@response = HTTPI.request(type, @request, adapter = @adapter)
+      @response = HTTPI.request(type, @request, adapter = @adapter)
     end
 
     def payload_info(endpoint, args)
@@ -55,19 +55,27 @@ module ApiEngine
 
     ################RESPONSE SECTION###################
     def body_hash
-      fail "Must have a proper request to return the #{__method__}" unless @response.nil?
-      JSON.parse(@@response.body)
+      fail "Must have a proper request to return the #{__method__}" unless !@response.nil?
+      JSON.parse(@response.body)
     end
 
     def response
-      @@response
+      @response
+    end
+
+    def code
+      @response.code
+    end
+
+    def body
+      @response.body
     end
 
     ############VALIDATION SECTION#############
     def success_code?
       #this needs to be updated to include all success response codes
       success_codes = *(200..299)
-      success_codes.include? @@response.code
+      success_codes.include? @response.code
     end
 
   end
