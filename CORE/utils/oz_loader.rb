@@ -24,7 +24,7 @@ module OzLoader
       require_relative '../world_gadgets/test_run'
       TestRun.state = 'SUITE_INITIALIZATION'
       load_core
-      load_grangecore
+      load_libs
       load_project
     end
 
