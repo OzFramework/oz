@@ -10,6 +10,7 @@ addons:
 install:
   - gem install cucumber
   - gem install watir
+  - gem install rspec
 
 script:
   - cd CORE
