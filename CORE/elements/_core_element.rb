@@ -65,6 +65,8 @@ class CoreElement
       raise e unless e.message =~ /Element is not clickable at point .* Other element would receive the click/
       @world.logger.warn 'Click failed, assuming it was due to animations on the page. Trying again...'
       raise "Click kept failing! Original Error: \n#{e}" unless CoreUtils.wait_safely(3){ watir_element.click }
+    rescue Errno::ECONNREFUSED => e
+      raise e
     end
     @on_click.call if @on_click
   end
@@ -104,7 +106,7 @@ class CoreElement
 
   def present?
     begin
-      watir_element.wait_until_present(timeout:0)
+      watir_element.wait_until(timeout:0, &:present?)
       return true
     rescue Watir::Wait::TimeoutError => e
       return false
