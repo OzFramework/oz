@@ -19,7 +19,7 @@ module ApiEngine
     end
 
     def payload_info(endpoint, args)
-      unless args.empty?
+      unless args.empty? 0
         args = args[0]
         authenticate(args[:auth_type], args) unless args[:auth_type].nil?
         @adapter = args[:adapter] unless args[:adapter].nil?
@@ -29,8 +29,7 @@ module ApiEngine
       end
       #This is used to bypass ssl certs
       @request.auth.ssl.verify_mode = :none
-      #TODO get ssl cert file working
-      # @request.auth.ssl.ca_cert_file = __dir__ + '/ca_cert.pem'
+
       @request.url = endpoint
     end
 
@@ -45,7 +44,8 @@ module ApiEngine
       when 'ntlm'
         @request.auth.ntlm(user, pass, domain)
       when 'ssl'
-        "ssl cert selected"
+        #TODO get ssl cert file working
+        @request.auth.ssl.ca_cert_file = __dir__ + '/ca_cert.pem'
       when 'digest'
         request.auth.digest(user, pass)
       else
@@ -87,6 +87,7 @@ module ApiEngine
   end
 end
 
+#test calls and validation checks
 call = ApiEngine::Rest.new
 # call.request('https://revenueenterpriseservices.int.igsenergy.net/BillingAccount/GetInformation', :post, body: '{"InvoiceGroupID" : 4899259}') #post example
 call.request('https://revenueenterpriseservices.int.igsenergy.net/Invoices/ExcelSummarySheetData/22644713', :get) #get example
