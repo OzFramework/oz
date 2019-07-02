@@ -21,8 +21,6 @@ module OzLoader
       ENV['OZ_CORE_DIR'] = "#{__dir__}/../"
       print "CORE location: [#{ENV['OZ_CORE_DIR']}]\n" if debug?
       $world = Object.new unless defined?(Cucumber)
-      require_relative '../world_gadgets/test_run'
-      TestRun.state = 'SUITE_INITIALIZATION'
       load_core
       load_libs
       load_project
