@@ -7,7 +7,7 @@ class CoreElement
     :core_element
   end
 
-  @@locator_options = [:id, :class, :xpath, :text, :href, :for, :name]
+  @@locator_options = [:id, :class, :xpath, :text, :href, :for, :name, :css, :index]
 
   def self.locator_options
     @@locator_options
@@ -21,19 +21,14 @@ class CoreElement
   def initialize(name, world, options)
     @type = self.class.type
     @name = name + self.class.type
-
-    has_locator = false
-    @@locator_options.each do |locator_type|
-      if options[locator_type]
-        @locator_hash = {locator_type => options[locator_type]}
-        has_locator = true
-      end
-    end
-    raise "ELEMENT [#{name}] must have a locator!/nValid locators are: #{@@locator_options}" unless has_locator
+    @locator_hash = options.select{|locator_type, _| @@locator_options.include? locator_type}
+                        .map{|locator_type, value| [locator_type, value]}.to_h
+    raise "ELEMENT [#{name}] must have a locator!/nValid locators are: #{@@locator_options}" if @locator_hash.empty?
 
     @world = world
     @options = {:active => true}.merge(options)
     @active = @options[:active]
+    @clear = @options[:clear] ? true : false
 
     assign_element_type
   end
