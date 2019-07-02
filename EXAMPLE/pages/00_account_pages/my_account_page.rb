@@ -1,6 +1,7 @@
 class MyAccountPage < ExampleStorefrontRootPage
 
-  add_id_element(:h1, /MY ACCOUNT/, class: 'page-heading')
+  add_id_element(:h1, /My Account/i, class: 'page-heading')
+  add_wait_element(:p, class: 'info-account')
   add_route(:OrderHistoryPage, :order_history_button)
   add_route(:CreditSlipsPage, :my_credit_slips_button)
   add_route(:MyAddressesPage, :my_addresses_button)
