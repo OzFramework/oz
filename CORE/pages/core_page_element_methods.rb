@@ -12,7 +12,7 @@ class CorePage
         ElementGroup.new(args)
     end
     
-    def add_element(name, options, element_class)
+    def add_element(name, options, element_class = CoreElement)
         new_element = element_class.new(name, @world, options)
         @elements[new_element.name] = new_element
         return new_element

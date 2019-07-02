@@ -19,7 +19,7 @@ class TextFieldElement < CoreElement
     def fill(data)
       assert_active
       @world.logger.action "Filling [#{@name}] with [#{data}]"
-      manually_clear if @world.configuration["BROWSER"] == "internet_explorer"
+      manually_clear if @world.configuration["BROWSER"] == "internet_explorer" || @clear
       watir_element.set(data)
 
       begin
