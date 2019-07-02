@@ -1,3 +1,4 @@
+require_relative 'router_store'
 
 class Router
 
