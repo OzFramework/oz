@@ -28,9 +28,16 @@ class CorePage
 
 
     def navigate_via_route(route)
-        route.prerequisites.each { |prerequisite| self.send(prerequisite) }
+        route.prerequisites.each do |prerequisite|
+            self.send(prerequisite) unless prerequisite.is_a? Array
+            self.send(prerequisite[0], prerequisite[1]) if prerequisite.is_a? Array
+        end
         action = route.action
-        self.respond_to?(action) ? self.send(action) : @elements[action].click
+        if action.is_a? Array
+            self.send(action[0], *action[1..-1])
+        else
+            self.respond_to?(action) ? self.send(action) : @elements[action].click
+        end
         @world.assert_and_set_page(route.target_page)
     end
 
