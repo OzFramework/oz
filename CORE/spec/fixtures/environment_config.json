@@ -1,0 +1,17 @@
+{
+  "default": {
+    "URLS": {
+      "HOME": "https://the-internet.herokuapp.com/"
+    }
+  },
+  "production": {
+    "URLS": {
+      "HOME": "https://the-internet.herokuapp.com/"
+    }
+  },
+  "model": {
+    "URLS": {
+      "HOME": "https://the-internet.herokuapp.com/"
+    }
+  }
+}
