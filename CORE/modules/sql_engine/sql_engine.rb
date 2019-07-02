@@ -1,4 +1,4 @@
-require_relative '../../../utils/oz_loader'
+require_relative '../../utils/oz_loader'
 OzLoader.check_gems(%w[sequel], 'SQLEngine')
 require 'sequel'
 
