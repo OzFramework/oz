@@ -1,7 +1,8 @@
 language: ruby
 sudo: required
 rvm:
-  - 2.4.0
+  - 2.5.5
+  - 2.6.3
 
 addons:
   chrome: stable
@@ -11,6 +12,9 @@ install:
   - gem install watir
 
 script:
+  - cd CORE
+  - rspec
+  - cd ../
   - cd EXAMPLE
   - export HEADLESS_CHROME=true
   - export LOG_LEVEL=DEBUG
