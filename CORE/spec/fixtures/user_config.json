@@ -1,0 +1,19 @@
+{
+  "TEST_ENVIRONMENT": "default",
+  "LOG_LEVEL": "ACTION",
+  "BROWSER": "chrome",
+  "RECORD_VIDEO": true,
+  "FLASH": false,
+  "CREATE_DOT_GRAPH": true,
+  "CLOSE_BROWSER": true,
+  "PRINT_LEDGER": false,
+  "LEDGER_JSON": true,
+  "PRETTY_JSON": true,
+  "MAXIMIZE_BROWSER": true,
+  "REMOTE_LOGGING": true,
+  "SPLUNK_TOKEN": "",
+  "USE_GRID": false,
+  "LOCAL_LEDGER": false,
+  "EFFECTIVE_DATE": "today",
+  "COLORLESS_OUTPUT": true
+}
