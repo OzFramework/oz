@@ -16,4 +16,7 @@ page_graph.dot
 .bundle
 bin
 
+#gemfile
+gemfile.lock
+
 examples.txt
