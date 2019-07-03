@@ -5,6 +5,7 @@ module ApiEngine
   class Rest
 
     def initialize
+      ensure_installed('HTTPI')
       @request = HTTPI::Request.new
     end
 
