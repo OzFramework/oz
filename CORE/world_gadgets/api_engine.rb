@@ -87,17 +87,10 @@ module ApiEngine
     ############VALIDATION SECTION#############
     def error?
       @@response.error?
-      #this needs to be updated to include all success response codes
-      # '*' turns number range into an array
-      # success_codes = *(200..299)
-      # success_codes.include? @response.code
     end
 
   end
 
-  class Soap
-    #stub for soap services if ever needed
-  end
 end
 
 #test calls and validation checks
