@@ -1,16 +1,22 @@
-ensure_installed('HTTPI')
+require_relative '../../utils/oz_loader'
+OzLoader.check_gems(%w[httpi], 'APIEngine')
 require 'httpi'
 require 'json'
 
 module ApiEngine
   class Rest
 
-    def initialize
+    def self.world_name
+      :api_engine
+    end
+
+    def initialize(world = nil)
+      @world = world
       @request = HTTPI::Request.new
     end
 
     ###############REQUEST SECTION#############
-    def request(endpoint, type, *args)
+    def request(endpoint = nil, type, *args)
       fail 'must provide an endpoint' unless !endpoint.nil?
       #type can be put, post, get, delete, or head
       fail 'type should be a symbol' unless type.is_a?(Symbol)
@@ -56,8 +62,7 @@ module ApiEngine
     end
 
     def get_cert
-      cert = Dir.glob('*/*').grep(/#{@env}/)[0]
-      fail 'Unable to locate proper cert' unless !cert.nil?
+      Dir.glob('*/*').grep(/#{@env}/)[0]
     end
 
     ################RESPONSE SECTION###################
@@ -96,8 +101,8 @@ module ApiEngine
 end
 
 #test calls and validation checks
-call = ApiEngine::Rest.new
+# call = ApiEngine::Rest.new
 # call.request('https://revenueenterpriseservices.int.igsenergy.net/BillingAccount/GetInformation', :post, body: '{"InvoiceGroupID" : 4899259}') #post example
-call.request('https://revenueenterpriseservices.int.igsenergy.net/Invoices/ExcelSummarySheetData/22644713', :get, :auth_type => 'ssl', :env => 'int') #get example
-fail 'Response length must be greater than 0' unless call.body_hash['FileData'].length > 0 #get example validation
-fail "Call failed with #{call.response.code} response code" unless !call.error?
+# call.request('https://revenueenterpriseservices.int.igsenergy.net/Invoices/ExcelSummarySheetData/22644713', :get, :auth_type => 'ssl', :env => 'int') #get example
+# fail 'Response length must be greater than 0' unless call.body_hash['FileData'].length > 0 #get example validation
+# fail "Call failed with #{call.response.code} response code" unless !call.error?
