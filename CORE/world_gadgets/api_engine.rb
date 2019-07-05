@@ -17,7 +17,7 @@ module ApiEngine
 
     ###############REQUEST SECTION#############
     def request(endpoint = nil, type, *args)
-      fail 'must provide an endpoint' unless !endpoint.nil?
+      fail 'must provide an endpoint' if endpoint.nil?
       #type can be put, post, get, delete, or head
       fail 'type should be a symbol' unless type.is_a?(Symbol)
 
@@ -40,9 +40,9 @@ module ApiEngine
     end
 
     def authenticate(type, args)
-      user = args[:username] unless !args[:username].nil?
-      pass = args[:password] unless !args[:password].nil?
-      domain = args[:domain] unless !args[:domain].nil?
+      user = args[:username] if args[:username].nil?
+      pass = args[:password] if args[:password].nil?
+      domain = args[:domain] if args[:domain].nil?
 
       case type
       when 'basic'
@@ -67,7 +67,7 @@ module ApiEngine
 
     ################RESPONSE SECTION###################
     def body_hash
-      fail "Must have a proper request to return the body" unless !@response.nil?
+      fail "Must have a proper request to return the body" if @response.nil?
       JSON.parse(@response.body)
     end
 
@@ -86,7 +86,7 @@ module ApiEngine
 
     ############VALIDATION SECTION#############
     def error?
-      @@response.error?
+      @response.error?
     end
 
   end
