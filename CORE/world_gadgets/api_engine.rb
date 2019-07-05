@@ -11,6 +11,7 @@ module ApiEngine
     end
 
     def initialize(world = nil)
+      ensure_installed('HTTPI')
       @world = world
       @request = HTTPI::Request.new
     end
