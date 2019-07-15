@@ -2,8 +2,9 @@
 
 class DataEngine
 
-  def initialize(logger=nil)
-    @logger = logger
+  def initialize(world)
+    @world = world
+    @logger = world.logger
   end
 
   def load_data_from_yml(filename)
