@@ -1,5 +1,5 @@
 require 'rspec'
-
+require 'httpi'
 require_relative '../world_gadgets/api_engine'
 
 describe ApiEngine do
