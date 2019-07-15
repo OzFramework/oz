@@ -1,6 +1,6 @@
 require 'rspec'
 require 'httpi'
-require_relative '../world_gadgets/api_engine'
+require_relative '../world_gadgets/gine/api_engine'
 
 describe ApiEngine do
   context 'Rest Calls' do
