@@ -1,6 +1,7 @@
 Dir.chdir("#{__dir__}/../") # Enforce the working directory to CORE
 $LOAD_PATH.unshift(File.absolute_path './') # Add the whole library to the loadpath
 require 'utils/oz_loader'
+require 'httpi'
 # Tell OzLoader we're doing unit testing.
 OzLoader.rspec = true
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
