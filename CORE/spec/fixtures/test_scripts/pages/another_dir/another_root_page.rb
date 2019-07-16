@@ -1,0 +1,2 @@
+class AnotherRootPage
+end
