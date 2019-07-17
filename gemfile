@@ -1,0 +1,6 @@
+source 'https://rubygems.org'
+
+:default
+gem 'json'
+gem 'httpi'
+gem 'watir'
