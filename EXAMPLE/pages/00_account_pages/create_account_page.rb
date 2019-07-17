@@ -1,4 +1,4 @@
-class CreateAccountWithParentsPage < ExampleStorefrontRootPage
+class CreateAccountPage < ExampleStorefrontRootPage
 
   add_id_element(:h1, /CREATE AN ACCOUNT/, class: 'page-heading')
   add_route(:MyAccountPage, :register_account, :fill)
