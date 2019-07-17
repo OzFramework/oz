@@ -48,38 +48,22 @@ describe OzLoader do
     end
 
     context :recursively_require_all_base_pages do
-      after do
-        Object.send(:remove_const, :SomeBasePage)
-        Object.send(:remove_const, :AnotherBasePage)
-      end
       it 'will require all files containing base_page in a directory recursively' do
         OzLoader.recursively_require_all_base_pages("#{script_dir}/pages")
         expect(defined? SomeBasePage).to be_truthy, 'SomeBasePage was not defined should have been'
         expect(defined? AnotherBasePage).to be_truthy, 'AnotherBasePage was not defined, should have been'
-        expect(defined? AnotherPage).to be_falsy, 'AnotherPage was defined, should not have been'
-        expect(defined? AnotherRootPage).to be_falsy, 'AnotherRootPage was defined, should not have been'
       end
     end
 
     context :recursively_require_all_root_pages do
-      after do
-        Object.send(:remove_const, :SomeRootPage)
-        Object.send(:remove_const, :AnotherRootPage)
-      end
       it 'will require all files containing root_page in a directory recursively' do
         OzLoader.recursively_require_all_root_pages("#{script_dir}/pages")
         expect(defined? SomeRootPage).to be_truthy, 'SomeRootPage was not defined should have been'
         expect(defined? AnotherRootPage).to be_truthy, 'AnotherRootPage was not defined, should have been'
-        expect(defined? AnotherPage).to be_falsy, 'AnotherPage was defined, should not have been'
-        expect(defined? SomeBasePage).to be_falsy, 'SomeBasePage was defined, should not have been'
       end
     end
 
     context :recursively_require_all_edge_pages do
-      after do
-        Object.send(:remove_const, :SomePage)
-        Object.send(:remove_const, :AnotherPage)
-      end
       it 'will require all remaining pages in a directory recursively' do
         OzLoader.recursively_require_all_edge_pages("#{script_dir}/pages")
         expect(defined? SomePage).to be_truthy, 'SomePage was not defined should have been'
@@ -123,7 +107,16 @@ describe OzLoader do
       end
 
       it 'allows you declare directories in which oz will call the page load methods' do
-        OzLoader.page_stores << "#{script_dir}/pages"
+        fork do
+          OzLoader.page_stores << "#{script_dir}/pages"
+          OzLoader.load
+          expect(defined? SomeBasePage).to be_truthy, 'SomeBasePage was not defined should have been'
+          expect(defined? AnotherBasePage).to be_truthy, 'AnotherBasePage was not defined, should have been'
+          expect(defined? AnotherPage).to be_truthy, 'AnotherPage was not defined, should have been'
+          expect(defined? SomePage).to be_truthy, 'SomePage was not defined, should have been'
+          expect(defined? AnotherRootPage).to be_truthy, 'AnotherRootPage not was defined, should have been'
+          expect(defined? SomeRootPage).to be_truthy, 'SomeRootPage was not defined, should have been'
+        end
       end
 
       it 'allows you to add multiple directories with concat (see project_modules)' do
