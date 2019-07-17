@@ -1,4 +1,4 @@
-
+require 'watir'
 
 class BrowserEngine
 

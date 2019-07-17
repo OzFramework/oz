@@ -11,6 +11,7 @@ install:
   - gem install cucumber
   - gem install watir
   - gem install rspec
+  - gem install httpi
 
 script:
   - cd CORE
