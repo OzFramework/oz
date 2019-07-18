@@ -16,15 +16,6 @@ Feature: Test the content on each of the account pages
     When I fill the page with Data
     Then I can see that all the content on the page is correct
 
-  Scenario: Static text on the Create Account Using Parents Example Page
-    Given I am on the Create Account With Parents Page
-    Then I can see that all the content on the page is correct
-
-  Scenario: Static text on the Create Account Page Using Parents Example Page with page filled
-    Given I am on the Create Account With Parents Page
-    When I fill the page with Data
-    Then I can see that all the content on the page is correct
-
   Scenario: Static text on the My Account Page
     Given I am on the My Account Page
     Then I can see that all the content on the page is correct

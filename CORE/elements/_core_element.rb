@@ -1,6 +1,6 @@
 class CoreElement;
 end
-require_all('./elements')
+OzLoader.require_all('./elements')
 
 class CoreElement
   def self.type
