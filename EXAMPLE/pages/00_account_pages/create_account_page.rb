@@ -1,6 +1,7 @@
 class CreateAccountPage < ExampleStorefrontRootPage
 
-  add_id_element(:h1, /CREATE AN ACCOUNT/, class: 'page-heading')
+  add_id_element(:h1, /Create An Account/i, class: 'page-heading')
+  add_wait_element(:input, id: 'customer_firstname')
   add_route(:MyAccountPage, :register_account, :fill)
 
   def create_elements
