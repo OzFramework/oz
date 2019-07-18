@@ -7,7 +7,6 @@ class SignInPage < ExampleStorefrontRootPage
   #TODO: Update the routing here with defaults
   # add_route(:MyAccountPage, :fill_already_registered)
   add_route(:CreateAccountPage, :fill_create_account)
-  add_route(:CreateAccountWithParentsPage, :fill_create_account)
 
   def create_elements
 
