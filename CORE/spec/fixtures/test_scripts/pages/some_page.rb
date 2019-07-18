@@ -1,0 +1,2 @@
+class SomePage
+end

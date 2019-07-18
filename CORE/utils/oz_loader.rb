@@ -27,16 +27,20 @@ module OzLoader
     end
 
     def check_gems(required_gems, module_name, *args)
-      gem_statuses = required_gems.each_with_object({}){ |gem, hash| hash[gem] = Gem.loaded_specs.include?(gem) }
+      gem_statuses = required_gems.each_with_object({}){ |gem, hash| hash[gem] = Gem::Specification.any?{|it| it.name == gem} }
       return true unless gem_statuses.any?{|_, was_loaded| !was_loaded}
 
       warn "Gems:\n  #{gem_statuses.map{|key, value| "#{key}: #{value}"}.join("\n  ")}"
-      raise "Use of the #{module_name} requires the gems #{required_gems.insert(-2, 'and').join(' ')} to be on your gemlist." unless args.include?(:soft_fail)
+      message = "Use of the #{module_name} requires the gem"
+      message << "s #{required_gems.insert(-2, 'and').join(' ')}" if required_gems.size > 1
+      message << " #{required_gems.first}" if required_gems.size == 1
+      message << ' to be on your gemlist.'
+      raise message unless args.include?(:soft_fail)
       false
     end
 
-    def ensure_installed(required_gems)
-      return if check_gems(required_gems, :soft_fail)
+    def ensure_installed(required_gems, module_name)
+      return if check_gems(required_gems, module_name, :soft_fail)
 
       required_gems.each do |it|
         puts "Installing #{it}"
@@ -121,7 +125,7 @@ module OzLoader
       warning = ''
       warning << "No project modules defined, please use OzLoader.project_modules = [] to define project override locations\n" if project_modules.empty?
       warning << "No page stores defined, please use OzLoader.page_stores = [] to define page locations\n" if page_stores.empty?
-      return warn warning unless warning == ''
+      warn warning unless warning == ''
 
       @project_modules&.each(&method(:require_all))
       @page_stores&.each(&method(:recursively_require_all_root_pages))
