@@ -1,6 +1,6 @@
 require 'rspec'
 require 'httpi'
-require_relative '../modules/sql_engine/rb'
+require_relative '../modules/api_engine/api_engine.rb'
 
 describe ApiEngine do
   context 'Rest Calls' do
