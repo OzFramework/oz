@@ -24,7 +24,8 @@ class PageBlueprint
   end
 
   def add_route(target_page, action, prerequisites)
-    @routes[target_page] ||= Route.new( target_page, action, [ prerequisites ].flatten )
+    prerequisites = [prerequisites] unless prerequisites.is_a? Array
+    @routes[target_page] ||= Route.new( target_page, action, prerequisites )
   end
 
   def add_id_element(element, action)

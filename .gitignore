@@ -15,3 +15,8 @@ page_graph.dot
 #Bundler config, binstubs and such
 .bundle
 bin
+
+#gemfile
+gemfile.lock
+
+examples.txt

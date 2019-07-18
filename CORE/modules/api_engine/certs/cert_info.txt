@@ -1,0 +1,1 @@
+For certs, you will need to place '.pem' files in this folder.  Once you have them, include the name of the environment if needed to locate the cert.

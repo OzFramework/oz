@@ -1,13 +1,13 @@
 class CoreElement;
 end
-require_all('./elements')
+OzLoader.require_all('./elements')
 
 class CoreElement
   def self.type
     :core_element
   end
 
-  @@locator_options = [:id, :class, :xpath, :text, :href, :for, :name]
+  @@locator_options = [:id, :class, :xpath, :text, :href, :for, :name, :css, :index]
 
   def self.locator_options
     @@locator_options
@@ -21,19 +21,14 @@ class CoreElement
   def initialize(name, world, options)
     @type = self.class.type
     @name = name + self.class.type
-
-    has_locator = false
-    @@locator_options.each do |locator_type|
-      if options[locator_type]
-        @locator_hash = {locator_type => options[locator_type]}
-        has_locator = true
-      end
-    end
-    raise "ELEMENT [#{name}] must have a locator!/nValid locators are: #{@@locator_options}" unless has_locator
+    @locator_hash = options.select{|locator_type, _| @@locator_options.include? locator_type}
+                        .map{|locator_type, value| [locator_type, value]}.to_h
+    raise "ELEMENT [#{name}] must have a locator!/nValid locators are: #{@@locator_options}" if @locator_hash.empty?
 
     @world = world
     @options = {:active => true}.merge(options)
     @active = @options[:active]
+    @clear = @options[:clear] ? true : false
 
     assign_element_type
   end
@@ -69,6 +64,8 @@ class CoreElement
       raise e unless e.message =~ /Element is not clickable at point .* Other element would receive the click/
       @world.logger.warn 'Click failed, assuming it was due to animations on the page. Trying again...'
       raise "Click kept failing! Original Error: \n#{e}" unless CoreUtils.wait_safely(3){ watir_element.click }
+    rescue Errno::ECONNREFUSED => e
+      raise e
     end
     @on_click.call if @on_click
   end
@@ -108,7 +105,7 @@ class CoreElement
 
   def present?
     begin
-      watir_element.wait_until_present(timeout:0)
+      watir_element.wait_until(timeout:0, &:present?)
       return true
     rescue Watir::Wait::TimeoutError => e
       return false
@@ -152,21 +149,15 @@ class CoreElement
   end
 
   def validate(data)
-    if active
-      validation_point = @world.validation_engine.add_validation_point("Checking that [#{@name}] is displayed...")
-      if present?
-        validation_point.pass
-        flash
-      else
-        validation_point.fail("ERROR! [#{@name}] was not found on the page!\n\tFOUND: None\n\tEXPECTED: #{@name} should be displayed!")
-      end
+    status = active ? 'is' : 'is not'
+    validation_point = @world.validation_engine.add_validation_point("Checking that [#{@name}] #{status} displayed...")
+    if active == present?
+      validation_point.pass
+      flash if active
+    elsif !active && present?
+      validation_point.fail("  [#{@name}] was found on the page!\n       FOUND: #{@name}\n    EXPECTED: Element should not be displayed!")
     else
-      validation_point = @world.validation_engine.add_validation_point("Checking that [#{@name}] is not displayed...")
-      if present?
-        validation_point.fail("ERROR! [#{@name}] was found on the page!\n\tFOUND: #{@name}\n\tEXPECTED: Element should not be displayed!")
-      else
-        validation_point.pass
-      end
+      validation_point.fail("  [#{@name}] was not found on the page!\n       FOUND: None\n    EXPECTED: #{@name} should be displayed!")
     end
   end
 

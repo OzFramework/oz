@@ -13,3 +13,8 @@ Feature: Test navigation on the Home Page
     Given I am on the Home Page
     When I click the Sign In button
     Then I should see the Sign In Page
+
+  Scenario: Navigate Back to a Previous Page
+    Given I am on the Dresses Page
+    When I go back to the Home Page
+    Then I should see the Home Page
