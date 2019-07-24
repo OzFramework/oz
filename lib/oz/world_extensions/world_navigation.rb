@@ -12,6 +12,18 @@ module Oz
       end
     end
 
+    # Like proceed_to, but will recalculate a route in the event of a failure
+    def proceed_to!(target_page)
+      proceed_to(target_page)
+    rescue OzFramework::WrongPageError => e
+      # Bubble up the error if page wasn't a valid target or failed to move to another page after one retry.
+      raise e if !@current_page.valid_route_target?(e.found_page) || @previously_found_page.equal?(e.found_page)
+
+      @previously_found_page = e.found_page
+      assert_and_set_page(e.found_page)
+      retry
+    end
+
     def assert_and_set_page(page_name)
       @router.wait_for_page_to_load(page_name)
       @router.assert_application_is_on_page(page_name)
