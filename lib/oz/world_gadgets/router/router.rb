@@ -41,7 +41,7 @@ module Oz
       unless CoreUtils.wait_until(3){application_is_on_page?(page_class)}
         @world.logger.debug "Application was not on the [#{page_class}], attempting to find current page"
         current_page = find_current_page
-        raise "ERROR: The Application is on the wrong page!\n\tOZ expected that page to be [#{page_class}] but found [#{current_page}]!\n"
+        raise OzFramework::WrongPageError.new(page_class, current_page)
       end
     end
 
@@ -66,19 +66,19 @@ module Oz
     end
 
     def create_dot_file_from_graph
-        @world.logger.debug "Writing graph to page_graph.dot..."
+      @world.logger.debug "Writing graph to page_graph.dot..."
 
-        graph_file = File.open("page_graph.dot", "w")
-        graph_file.write "digraph G {"
-        @page_blueprints.each_pair do |start_page, blueprint|
-            blueprint.routes.each_pair do |action, route|
-                graph_file.write "#{start_page} -> #{route.target_page}[color=\"green\", label=\"#{route.action}\"];\n" unless route.target_page == start_page
-            end
+      graph_file = File.open("page_graph.dot", "w")
+      graph_file.write "digraph G {"
+      @page_blueprints.each_pair do |start_page, blueprint|
+        blueprint.routes.each_pair do |action, route|
+          graph_file.write "#{start_page} -> #{route.target_page}[color=\"green\", label=\"#{route.action}\"];\n" unless route.target_page == start_page
         end
-        graph_file.write "}"
-        graph_file.close
+      end
+      graph_file.write "}"
+      graph_file.close
 
-        @world.logger.debug "Done!"
+      @world.logger.debug "Done!"
     end
 
   end
