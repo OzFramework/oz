@@ -5,7 +5,9 @@ module Oz
     @source = ''
 
     class << self
-      attr_accessor :debug, :rspec, :project_modules, :page_stores, :world
+      attr_accessor :debug, :rspec, :world
+      attr_reader :project_modules
+      attr_reader :page_stores
 
       def debug?
         @debug
