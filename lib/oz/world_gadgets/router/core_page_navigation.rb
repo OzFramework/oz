@@ -42,6 +42,11 @@ module Oz
       @world.assert_and_set_page(route.target_page)
     end
 
+    # Check if a page was a valid target from this page.
+    def valid_route_target?(page)
+      @world.router.get_routes_between(self.class, page).any?
+    end
+
     def wait_for_page_to_load
       @world.router.wait_for_page_to_load
     end
