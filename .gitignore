@@ -20,3 +20,5 @@ bin
 gemfile.lock
 
 examples.txt
+
+.DS_Store
