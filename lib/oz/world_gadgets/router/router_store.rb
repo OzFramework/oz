@@ -47,7 +47,7 @@ module Oz
 
       # Copy Routes into blueprints
       @stored_routes.each do |route|
-        target_page = registry.find { |it| it.to_s =~ /#{route[:target_page]}/i }
+        target_page = registry.find { |it| it.to_s =~ /^#{route[:target_page]}$/i }
         page_blueprints[route[:source_page]].add_route(target_page, route[:action], route[:prerequisites])
       end
 
