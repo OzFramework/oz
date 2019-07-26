@@ -11,6 +11,7 @@ module Oz
     def self.inherited(subclass)
       subclass.parent_classes = [self] - [CorePage]
       subclass.parent_classes += self.parent_classes if self.parent_classes
+      RouterStore.registry << subclass
       RouterStore.store_page_blueprint(subclass, subclass.parent_classes)
       super
     end
@@ -51,8 +52,8 @@ module Oz
       @world.router.wait_for_page_to_load
     end
 
-    #This is for overriding in subclasses.
-    # It will be called automatically when a page is fully loaded (once assert_and_set_page finishes).
+      #This is for overriding in subclasses.
+      # It will be called automatically when a page is fully loaded (once assert_and_set_page finishes).
     def on_page_load; end
 
   end

@@ -5,6 +5,7 @@ module Oz
 
     def initialize(world)
       @world = world
+      @registry = RouterStore.registry
       @page_blueprints = RouterStore.generate_graph(@world)
       create_dot_file_from_graph if @world.configuration['CREATE_DOT_GRAPH']
     end
