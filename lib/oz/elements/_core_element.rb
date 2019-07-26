@@ -21,7 +21,7 @@ module Oz
 
     def initialize(name, world, options)
       @type = self.class.type
-      @name = name + self.class.type
+      @name = :"#{name}_#{self.class.type}"
       @locator_hash = options.select{|locator_type, _| @@locator_options.include? locator_type}
                           .map{|locator_type, value| [locator_type, value]}.to_h
       raise "ELEMENT [#{name}] must have a locator!/nValid locators are: #{@@locator_options}" if @locator_hash.empty?
