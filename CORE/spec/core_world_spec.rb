@@ -1,20 +1,7 @@
 require 'rspec'
 require 'rspec/mocks'
 require 'world_extensions/core_world'
-
-class ShinyNewBrick
-  def initialize(*args); end
-  def method_missing(*args); end
-end
-
-class ShinyWorldModule
-  def self.world_name
-    :shiny_thing
-  end
-  def initialize(*args); end
-  # for intellisense
-  def shiny_thing; end
-end
+require_relative 'fixtures/classes/shinies'
 
 describe CoreWorld do
   before { ENV['OZ_CONFIG_DIR'] = './spec/fixtures' }

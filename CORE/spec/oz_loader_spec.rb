@@ -1,8 +1,6 @@
 require 'rspec'
+require_relative 'fixtures/classes/test_object'
 require 'utils/oz_loader'
-
-class TestObject
-end
 
 describe OzLoader do
   let!(:script_dir) {'spec/fixtures/test_scripts'}
