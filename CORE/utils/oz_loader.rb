@@ -140,7 +140,7 @@ module OzLoader
       load_warning = load_warnings
       warn load_warning unless load_warning == ''
 
-      @project_modules&.each(&method(:require_all))
+      @project_modules.each(&method(:require_all))
       build_page_stores
     end
 
