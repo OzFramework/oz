@@ -1,0 +1,22 @@
+require 'rubycritic/rake_task'
+
+RubyCritic::RakeTask.new do |task|
+  # Name of RubyCritic task. Defaults to :rubycritic.
+  task.name    = 'code_quality'
+
+  # Glob pattern to match source files. Defaults to FileList['.'].
+  task.paths   = FileList['elements',
+                          'modules',
+                          'pages',
+                          'step_definitions',
+                          'tmp',
+                          'utils',
+                          'world_extensions',
+                          'world_gadgets',
+                          'setup.rb'
+  ]
+
+  # You can pass all the options here in that are shown by "rubycritic -h" except for
+  # "-p / --path" since that is set separately. Defaults to ''.
+  task.options = ''
+end
