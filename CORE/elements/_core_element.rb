@@ -3,42 +3,46 @@ end
 OzLoader.require_all('./elements')
 
 class CoreElement
+
+  @locator_options = %i[id class xpath text href for name css index]
+  class << self
+    ## Allows setting a custom list of locator options
+    attr_accessor :locator_options
+  end
+
   def self.type
     :core_element
   end
 
-  @@locator_options = [:id, :class, :xpath, :text, :href, :for, :name, :css, :index]
-
-  def self.locator_options
-    @@locator_options
-  end
-
-  attr_reader :name, :active, :locator_hash, :type
-
+  attr_reader :name, :active, :locator_hash, :parent
 
   ### Attrib Methods ###
 
   def initialize(name, world, options)
-    @type = self.class.type
-    @name = name + self.class.type
-    @locator_hash = options.select{|locator_type, _| @@locator_options.include? locator_type}
-                        .map{|locator_type, value| [locator_type, value]}.to_h
-    raise "ELEMENT [#{name}] must have a locator!/nValid locators are: #{@@locator_options}" if @locator_hash.empty?
-
+    @name = name + type
+    @locator_hash = options.select { |locator_type, _| @locator_options.include? locator_type }
+                           .map { |locator_type, value| [locator_type, value] }
+                           .to_h
+    ensure_valid_selector
     @world = world
-    @options = {:active => true}.merge(options)
-    @active = @options[:active]
-    @clear = @options[:clear] ? true : false
+    @active = @options[:active] || true
+    @clear = @options[:clear] || false
+    @parent = @options[:parent] || browser
+    @on_fill = @on_click = @on_hover = Proc.new
 
     assign_element_type
   end
 
-  def browser
-    @world.browser
+  def ensure_valid_selector
+    raise OzFramework::InvalidElementSelectorError.new(@name, @locator_hash, @locator_options) if @locator_hash.empty?
   end
 
-  def parent
-    @options[:parent] ? @options[:parent].watir_element : browser
+  def type
+    self.class.type
+  end
+
+  def browser
+    @world.browser
   end
 
   def watir_element
@@ -46,7 +50,7 @@ class CoreElement
   end
 
   def assign_element_type
-    @element_type = @options[:element_type] ? @options[:element_type] : :div
+    @element_type = @options[:element_type] || :div
   end
 
   ### Behavioral Methods ###
@@ -54,16 +58,17 @@ class CoreElement
   def click
     assert_active
     @world.logger.action "Clicking [#{@name}]"
-    begin
-      watir_element.click
-    rescue Selenium::WebDriver::Error::UnknownError => e
-      raise e unless e.message =~ /Element is not clickable at point .* Other element would receive the click/
-      @world.logger.warn 'Click failed, assuming it was due to animations on the page. Trying again...'
-      raise "Click kept failing! Original Error: \n#{e}" unless CoreUtils.wait_safely(3){ watir_element.click }
-    rescue Errno::ECONNREFUSED => e
-      raise e
-    end
-    @on_click.call if @on_click
+    try_click
+    @on_click.call
+  end
+
+  def try_click
+    watir_element.click
+  rescue Selenium::WebDriver::Error::UnknownError => error
+    raise error unless error.message =~ /Element is not clickable at point .* Other element would receive the click/
+
+    @world.logger.warn 'Click failed, assuming it was due to animations on the page. Trying again...'
+    raise "Click kept failing! Original Error: \n#{error}" unless CoreUtils.wait_safely(3) { watir_element.click }
   end
 
   def on_click(&block)
@@ -73,21 +78,23 @@ class CoreElement
   def hover
     assert_active
     @world.logger.action "Hovering over [#{@name}]"
-    begin
-      watir_element.hover
-    rescue Watir::Exception::UnknownObjectException => e
-      @world.logger.warn 'Unable to hover over element, attempting to proceed anyway...'
-      return false
-    end
-    @on_hover.call if @on_hover
+    success = try_hover
+    @on_hover.call if success
+  end
+
+  def try_hover
+    watir_element.hover
+  rescue Watir::Exception::UnknownObjectException => _error
+    @world.logger.warn 'Unable to hover over element, attempting to proceed anyway...'
+    false
   end
 
   def on_hover(&block)
     @on_hover = block
   end
 
-  def fill(data)
-    @on_fill.call if @on_fill
+  def fill(_data)
+    @on_fill.call
   end
 
   def on_fill(&block)
@@ -100,12 +107,7 @@ class CoreElement
   end
 
   def present?
-    begin
-      watir_element.wait_until(timeout:0, &:present?)
-      return true
-    rescue Watir::Wait::TimeoutError => e
-      return false
-    end
+    watir_element.present?
   end
 
   def flash
@@ -144,7 +146,8 @@ class CoreElement
     condition ? activate : deactivate
   end
 
-  def validate(data)
+  # TODO refactor when validator logic gets merged in.
+  def validate(_data)
     status = active ? 'is' : 'is not'
     validation_point = @world.validation_engine.add_validation_point("Checking that [#{@name}] #{status} displayed...")
     if active == present?
