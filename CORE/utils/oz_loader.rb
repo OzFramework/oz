@@ -1,6 +1,9 @@
+ENV['OZ_CORE_DIR'] ||= "#{__dir__}/../"
+
 module OzLoader
   @project_modules = []
   @page_stores = []
+  @source = ENV['OZ_CORE_DIR']
 
   class << self
     attr_accessor :debug, :rspec, :world
@@ -16,10 +19,11 @@ module OzLoader
     end
 
     def load
-      print "\n=== Loading CORE Directory ===\n" if debug?
-      print "Loading CORE/setup.rb\n" if debug?
-      ENV['OZ_CORE_DIR'] = "#{__dir__}/../"
-      print "CORE location: [#{ENV['OZ_CORE_DIR']}]\n" if debug?
+      if debug?
+        print "\n=== Loading CORE Directory ===\n" +
+                  "Loading CORE/setup.rb\n" +
+                  "CORE location: [#{ENV['OZ_CORE_DIR']}]\n"
+      end
       $world = Object.new unless defined?(Cucumber)
       load_core
       load_libs
@@ -27,16 +31,26 @@ module OzLoader
     end
 
     def check_gems(required_gems, module_name, *args)
-      gem_statuses = required_gems.each_with_object({}){ |gem, hash| hash[gem] = Gem::Specification.any?{|it| it.name == gem} }
+      gem_statuses = check_availability(module_name, required_gems)
       return true unless gem_statuses.any?{|_, was_loaded| !was_loaded}
 
       warn "Gems:\n  #{gem_statuses.map{|key, value| "#{key}: #{value}"}.join("\n  ")}"
+      raise error_message(module_name, required_gems) unless args.include?(:soft_fail)
+
+      false
+    end
+
+    def error_message(module_name, required_gems)
       message = "Use of the #{module_name} requires the gem"
       message << "s #{required_gems.insert(-2, 'and').join(' ')}" if required_gems.size > 1
       message << " #{required_gems.first}" if required_gems.size == 1
       message << ' to be on your gemlist.'
-      raise message unless args.include?(:soft_fail)
-      false
+      message
+    end
+
+    def check_availability(required_gems)
+      available_gems = Gem::Specification.map(&:name)
+      required_gems.each_with_object({}){ |gem, hash| hash[gem] = available_gems.include?(gem) }
     end
 
     def ensure_installed(required_gems, module_name)
@@ -48,50 +62,51 @@ module OzLoader
       end
     end
 
-    def require_all(directory, pattern: '*.rb')
+    def files(directory)
+      return @files if @last_directory == directory
+
+      @last_directory = directory
       puts "Loading #{directory}" if debug?
-      source = ENV['OZ_CORE_DIR']
-      directory = File.join(source, directory)
-      Dir["#{directory}/#{pattern}"].sort.each do |file|
+      directory = File.join(@source, directory)
+      @files = Dir["#{directory}/**/*.rb"].sort
+    end
+
+    def require_all(directory, &block)
+      files = files(directory)
+      files = files.select { |file| block.call(file) } if block_given?
+      files.each do |file|
         print "Loading #{file}\n" if debug?
         require file
       end
     end
 
-    # TODO Move this out to router to allow it to handle page loading.
-    def recursively_require_all_root_pages(directory)
-      source = ENV['OZ_CORE_DIR']
-      directory = File.join(source, directory)
-      Dir["#{directory}/**/*.rb"].sort.each do |file|
-        if file =~ /root_page/
-          print "Loading #{file}\n" if debug?
-          require file
-        end
+    def build_page_stores
+      @page_stores.each do |store|
+        recursively_require_all_root_pages(store)
+        recursively_require_all_base_pages(store)
+        recursively_require_all_edge_pages(store)
       end
     end
 
+    def recursively_require_all_root_pages(directory)
+      require_all(directory) do |file|
+        file =~ /root_page/
+      end
+    end
+
+    def recursively_require_all_base_pages(directory)
+      require_all(directory) do |file|
+        file =~ /base_page/
+      end
+    end
 
     # TODO Move this out to router to allow it to handle page loading.
     def recursively_require_all_edge_pages(directory)
-      source = ENV['OZ_CORE_DIR']
-      directory = File.join(source, directory)
-      Dir["#{directory}/**/*.rb"].sort.each do |file|
-        unless file =~ /base_page|root_page/
-          print "Loading #{file}\n" if debug?
-          require file
-        end
+      require_all(directory) do |file|
+        file !~ /base|root_page/
       end
     end
 
-    # TODO Move this out to router to allow it to handle page loading.
-    def recursively_require_all_base_pages(directory)
-      source = ENV['OZ_CORE_DIR']
-      directory = File.join(source, directory)
-      Dir["#{directory}/**/*base_page*.rb"].sort.each do |file|
-        print "Loading #{file}\n" if debug?
-        require file
-      end
-    end
 
     ##
     # Does nothing if rspec is set to true to make unit testing oz world modules possible.
@@ -122,15 +137,18 @@ module OzLoader
     ##
     # Loads paths defined on project_modules.
     def load_project
+      load_warning = load_warnings
+      warn load_warning unless load_warning == ''
+
+      @project_modules&.each(&method(:require_all))
+      build_page_stores
+    end
+
+    def load_warnings
       warning = ''
       warning << "No project modules defined, please use OzLoader.project_modules = [] to define project override locations\n" if project_modules.empty?
       warning << "No page stores defined, please use OzLoader.page_stores = [] to define page locations\n" if page_stores.empty?
-      warn warning unless warning == ''
-
-      @project_modules&.each(&method(:require_all))
-      @page_stores&.each(&method(:recursively_require_all_root_pages))
-      @page_stores&.each(&method(:recursively_require_all_base_pages))
-      @page_stores&.each(&method(:recursively_require_all_edge_pages))
+      warning
     end
 
     ##
