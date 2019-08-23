@@ -1,11 +1,14 @@
-class ButtonElement < CoreElement
+module Oz
+
+  class ButtonElement < CoreElement
     def self.type
-        :button
+      :button
     end
 
     def assign_element_type
-        @options[:element_type] = :button unless @options[:element_type]
-        super
+      @options[:element_type] = :button unless @options[:element_type]
+      super
     end
 
+  end
 end

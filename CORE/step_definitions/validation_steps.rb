@@ -14,7 +14,7 @@ end
     #Tags: @navigation
     # Checks that the application is on the specified page.
 Then /^I should see the (.*) Page$/ do |page|
-  page_class = CoreUtils.find_class(page+' Page')
+  page_class = @router.page_class_for(page+' Page')
   validate_application_is_on_page(page_class)
 end
 

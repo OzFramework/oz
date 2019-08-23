@@ -1,5 +1,3 @@
-
-
 ENV['OZ_APP_NAME'] = 'EXAMPLE'
 ENV['OZ_CONFIG_DIR'] = "#{File.dirname(__FILE__)}/config"
 

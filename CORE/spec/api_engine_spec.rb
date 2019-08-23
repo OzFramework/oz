@@ -2,11 +2,11 @@ require 'rspec'
 require 'httpi'
 require_relative '../modules/api_engine/api_engine.rb'
 
-describe ApiEngine do
+describe Oz::ApiEngine do
   context 'Rest Calls' do
 
     before(:all) do
-      @call = ApiEngine::Rest.new
+      @call = Oz::ApiEngine::Rest.new
     end
 
     it '.request - get' do

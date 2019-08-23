@@ -1,21 +1,22 @@
-class TextFieldElement < CoreElement
+module Oz
+  class TextFieldElement < CoreElement
     def self.type
-        :text_field
+      :text_field
     end
-
+  
     def assign_element_type
-        @element_type = :input
+      @element_type = :input
     end
-
+  
     def watir_element
-        @watir_element ||= parent.text_field(@locator_hash)
+      @watir_element ||= parent.text_field(@locator_hash)
     end
-
+  
     def value
-        assert_active
+      assert_active
         watir_element.value
     end
-
+  
     def fill(data)
       assert_active
       @world.logger.action "Filling [#{@name}] with [#{data}]"
@@ -30,13 +31,14 @@ class TextFieldElement < CoreElement
       @world.ledger.record_fill(@name, data)
       super
     end
-
+  
     def manually_clear
       watir_element.click
       browser.send_keys(:end)
       watir_element.value.size.times do
-          browser.send_keys(:backspace) unless watir_element.value == ""
+        browser.send_keys(:backspace) unless watir_element.value == ""
       end
     end
-
+  
+  end
 end

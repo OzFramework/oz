@@ -1,18 +1,19 @@
-class TextAreaElement < CoreElement
+module Oz
+  class TextAreaElement < CoreElement
     def self.type
-        :text_area
+      :text_area
     end
 
     def assign_element_type
-        @element_type = :textarea
+      @element_type = :textarea
     end
 
     def watir_element
-        @watir_element ||= parent.textarea(@locator_hash)
+      @watir_element ||= parent.textarea(@locator_hash)
     end
-
+  
     def value
-        assert_active
+      assert_active
         watir_element.value
     end
 
@@ -30,4 +31,5 @@ class TextAreaElement < CoreElement
       super
     end
 
+  end
 end
