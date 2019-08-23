@@ -1,0 +1,3 @@
+require_relative 'step_definitions/hooks'
+require_relative 'step_definitions/page_steps'
+require_relative 'step_definitions/validation_steps'
