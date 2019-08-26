@@ -1,4 +1,4 @@
-require_relative '../../../CORE/utils/oz_loader'
+require 'oz/utils/oz_loader'
 Oz::OzLoader.check_gems(%w[httpi], 'APIEngine')
 require 'json'
 require 'httpi'

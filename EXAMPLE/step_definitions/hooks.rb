@@ -1,4 +1,4 @@
-require_relative '../../CORE/step_definitions'
+require_relative 'oz/step_definitions'
 
 Before do |scenario|
   set_root_page(ExampleStorefrontRootPage)

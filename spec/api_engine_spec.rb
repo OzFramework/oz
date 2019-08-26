@@ -1,6 +1,6 @@
 require 'rspec'
 require 'httpi'
-require_relative '../modules/api_engine/api_engine.rb'
+require 'oz/modules/api_engine/api_engine.rb'
 
 describe Oz::ApiEngine do
   context 'Rest Calls' do

@@ -1,19 +1,19 @@
 require 'rspec'
-require 'utils/oz_loader'
+require 'oz/utils/oz_loader'
 
 class TestObject
 end
 
 describe Oz::OzLoader do
-  let!(:script_dir) {'spec/fixtures/test_scripts'}
-  let!(:file1){'spec/fixtures/test_scripts/some_file'}
-  let!(:file2){'spec/fixtures/test_scripts/another_dir/another_file'}
+  let!(:script_dir) {"#{__dir__}/fixtures/test_scripts"}
+  let!(:file1){"#{__dir__}/fixtures/test_scripts/some_file"}
+  let!(:file2){"#{__dir__}/fixtures/test_scripts/another_dir/another_file"}
 
   context 'Self Methods (static context), called using Oz::OzLoader.' do
     before{ ENV['OZ_CORE_DIR'] = './' }
     context :check_gems do
       it 'allows me to check if a gem is installed' do
-        result = Oz::OzLoader.check_gems(%w[psych json date], 'TestModule')
+        result = Oz::OzLoader.check_gems(%w[psych json], 'TestModule')
         expect(result).to be true
       end
 
@@ -97,7 +97,7 @@ describe Oz::OzLoader do
         Oz::OzLoader.project_modules.concat([script_dir, "#{script_dir}/another_dir"])
         Oz::OzLoader.load
         expect(require file1).to be(false), "#{file1} was not required by require all. Should have been."
-        expect(require file2).to be(false), "#{file1} was not required by require all. Should have been."
+        expect(require file2).to be(false), "#{file2} was not required by require all. Should have been."
       end
     end
 

@@ -1,6 +1,6 @@
 require 'rspec'
 require 'rspec/mocks'
-require 'world_extensions/core_world'
+require 'oz/world_extensions/core_world'
 
 class ShinyNewBrick
   def initialize(*args); end
