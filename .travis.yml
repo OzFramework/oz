@@ -13,9 +13,7 @@ install:
   - gem install httpi
 
 script:
-  - cd CORE
   - rspec
-  - cd ../
   - cd EXAMPLE
   - export HEADLESS_CHROME=true
   - export LOG_LEVEL=DEBUG
