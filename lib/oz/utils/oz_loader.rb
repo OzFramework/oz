@@ -64,7 +64,7 @@ module Oz
 
         @last_directory = directory
         puts "Loading #{directory}" if debug?
-        directory = File.join(@source, directory)
+        directory = "#{@source}#{directory}"
         @files = Dir["#{directory}/**/*.rb"].sort
       end
 
@@ -170,17 +170,18 @@ module Oz
     DEPRECATED_METHODS = %i[require_all recursively_require_all_edge_pages recursively_require_all_base_pages].freeze
   end
 
-  OzLoader::DEPRECATED_METHODS.each do |method|
-    define_singleton_method(method) do |directory|
-      OzLoader.deprecated(method, fix: "Use OzLoader.#{method}")
-      OzLoader.send(method, directory)
-    end
-  end
-
-  def append_to_world(module_name)
-    OzLoader.world = self
-    OzLoader.deprecated(__method__, fix: "Use OzLoader.#{__method__}")
-    OzLoader.append_to_world(module_name)
-  end
   Loader = OzLoader
+end
+
+Oz::OzLoader::DEPRECATED_METHODS.each do |method|
+  define_singleton_method(method) do |directory|
+    Oz::OzLoader.deprecated(method, fix: "Use OzLoader.#{method}")
+    Oz::OzLoader.send(method, directory)
+  end
+end
+
+def append_to_world(module_name)
+  Oz::OzLoader.world = self
+  Oz::OzLoader.deprecated(__method__, fix: "Use OzLoader.#{__method__}")
+  Oz::OzLoader.append_to_world(module_name)
 end
