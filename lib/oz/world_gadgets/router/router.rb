@@ -11,7 +11,7 @@ module Oz
     end
 
     def page_class_for(target_page)
-      @page_blueprints.keys.find{|it| it.to_s.downcase.eql? target_page.downcase.delete(' ')}
+      @registry.find{|it| it.to_s.downcase.eql? target_page.downcase.delete(' ')}
     end
 
     def wait_for_page_to_load(target_page = @world.current_page.class)
