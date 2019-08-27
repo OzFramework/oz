@@ -13,8 +13,8 @@ end
 
 Given /^I am on the (.*?) Page(?: by way of the (.*?) Page)? by any means$/ do |target_page, intermediate_page|
   @root_page.begin_new_session
-  proceed_to!(CoreUtils.find_class(intermediate_page+' Page')) if intermediate_page
-  proceed_to!(CoreUtils.find_class(target_page+' Page'))
+  proceed_to!(@router.page_class_for(intermediate_page+' Page')) if intermediate_page
+  proceed_to!(@router.page_class_for(target_page+' Page'))
   set_data_target
 end
 
@@ -26,13 +26,13 @@ end
 
 When /^I (?:proceed|go back) to the (.*?) Page(?: by way of the (.*?) Page)? by any means$/ do |target_page, intermediate_page|
   @root_page.begin_new_session
-  proceed_to!(CoreUtils.find_class(intermediate_page+' Page')) if intermediate_page
-  proceed_to!(CoreUtils.find_class(target_page+' Page'))
+  proceed_to!(@router.page_class_for(intermediate_page+' Page')) if intermediate_page
+  proceed_to!(@router.page_class_for(target_page+' Page'))
   set_data_target
 end
 
 When /^I fill the page with (.*)$/ do |data_name|
-    @current_page.fill(data_name)
+  @current_page.fill(data_name)
 end
 
 When /^I click the (.*)$/ do |element_name|
