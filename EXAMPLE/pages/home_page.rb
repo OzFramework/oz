@@ -22,7 +22,7 @@ class HomePage < ExampleStorefrontRootPage
   def assign_element_logic
     @dresses_button.on_hover do
       @casual_dresses_button.activate
-      CoreUtils.wait_until(3) { @casual_dresses_button.present? }
+      wait_for { @casual_dresses_button.present? }
     end
   end
 

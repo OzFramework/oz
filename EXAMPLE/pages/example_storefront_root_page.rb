@@ -1,6 +1,6 @@
 
 
-class ExampleStorefrontRootPage < CorePage
+class ExampleStorefrontRootPage < Oz::CorePage
 
   def begin_new_session
     browser.goto(@world.configuration['ENVIRONMENT']["URL"])
