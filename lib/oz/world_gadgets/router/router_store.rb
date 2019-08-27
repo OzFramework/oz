@@ -1,3 +1,5 @@
+require_relative 'page_blueprint'
+
 module Oz
   class RouterStore
 
