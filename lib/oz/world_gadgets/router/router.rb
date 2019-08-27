@@ -11,7 +11,7 @@ module Oz
     end
 
     def page_class_for(target_page)
-      @page_blueprints.keys.find{|it| it.to_s.downcase.eql? target_page.downcase.delete(' ')}
+      @registry.find{|it| it.to_s.downcase.eql? target_page.downcase.delete(' ')}
     end
 
     def wait_for_page_to_load(target_page = @world.current_page.class)
@@ -67,19 +67,19 @@ module Oz
     end
 
     def create_dot_file_from_graph
-        @world.logger.debug "Writing graph to page_graph.dot..."
+      @world.logger.debug "Writing graph to page_graph.dot..."
 
-        graph_file = File.open("page_graph.dot", "w")
-        graph_file.write "digraph G {"
-        @page_blueprints.each_pair do |start_page, blueprint|
-            blueprint.routes.each_pair do |action, route|
-                graph_file.write "#{start_page} -> #{route.target_page}[color=\"green\", label=\"#{route.action}\"];\n" unless route.target_page == start_page
-            end
+      graph_file = File.open("page_graph.dot", "w")
+      graph_file.write "digraph G {"
+      @page_blueprints.each_pair do |start_page, blueprint|
+        blueprint.routes.each_pair do |action, route|
+          graph_file.write "#{start_page} -> #{route.target_page}[color=\"green\", label=\"#{route.action}\"];\n" unless route.target_page == start_page
         end
-        graph_file.write "}"
-        graph_file.close
+      end
+      graph_file.write "}"
+      graph_file.close
 
-        @world.logger.debug "Done!"
+      @world.logger.debug "Done!"
     end
 
   end
