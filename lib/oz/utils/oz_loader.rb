@@ -5,7 +5,9 @@ module Oz
     @source = ''
 
     class << self
-      attr_accessor :debug, :rspec, :project_modules, :page_stores, :world
+      attr_accessor :debug, :rspec, :world
+      attr_reader :project_modules
+      attr_reader :page_stores
 
       def debug?
         @debug
@@ -152,7 +154,7 @@ module Oz
       # Raises a warning explaining a deprecation and returns the offending caller
       def deprecated(method_name, dep_type: 'Main Context', fix: nil)
         # This gunk allows me to figure out which non-library thing called the deprecated method.
-        my_caller = caller_locations.map(&:to_s).reject{ |it| (it =~ /ruby-[\d\.]+\/(?:lib|gems|bin)/) }[-1]
+        my_caller = caller_locations.map(&:to_s)[1]
         warn("Calling #{method_name} via #{dep_type} is deprecated, caller was #{my_caller}")
         warn(fix) if fix
       end

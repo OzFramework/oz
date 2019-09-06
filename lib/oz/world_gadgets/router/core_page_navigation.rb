@@ -11,6 +11,7 @@ module Oz
     def self.inherited(subclass)
       subclass.parent_classes = [self] - [CorePage]
       subclass.parent_classes += self.parent_classes if self.parent_classes
+      RouterStore.registry << subclass
       RouterStore.store_page_blueprint(subclass, subclass.parent_classes)
       super
     end
@@ -28,6 +29,8 @@ module Oz
     end
 
 
+    # Todo Pull this into router since it's not strictly speaking something that the page should be handling.
+    # =======================================================================================================
     def navigate_via_route(route)
       route.prerequisites.each do |prerequisite|
         self.send(prerequisite) unless prerequisite.is_a? Array
@@ -45,6 +48,8 @@ module Oz
     def wait_for_page_to_load
       @world.router.wait_for_page_to_load
     end
+
+    # =======================================================================================================
 
     #This is for overriding in subclasses.
     # It will be called automatically when a page is fully loaded (once assert_and_set_page finishes).
