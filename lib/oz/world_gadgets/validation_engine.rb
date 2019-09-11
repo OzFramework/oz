@@ -1,3 +1,5 @@
+require_relative '../errors/not_in_validation_mode_error'
+
 module Oz
 
   class ValidationPoint
@@ -69,6 +71,56 @@ module Oz
         @failed_points.push(@current_point)
       end
       @current_point = nil
+    end
+
+    ##
+    # Execute a group of validations
+    def perform_validations
+      enter_validation_mode
+      yield
+      exit_validation_mode
+    end
+
+    ##
+    # Performs a singular validation, validation mode must have been activated
+    # externally, such as with element validations or through a
+    # perform_validations block.  Yields the created validation point to the
+    # block.
+    #
+    # Use:
+    # @world.validation_engine.validate('one plus one equals 2', 'failed to calculate 2 from 1 plus 1') do
+    #   1+1=3
+    # end
+    #
+    # @world.validaiton_engine.validate('It did the thing', 'failed normally') do |validation_point|
+    #   validation_point.fail('Oh noes.') if some_obscure_edge_case
+    #   do_the_thing
+    # end
+    # @param [String] message
+    # @param [String] fail_message
+    def validate(message, fail_message)
+      raise(Oz::NotInValidationModeError.new) unless @validation_mode_on
+      validation_point = add_validation_point(message)
+      result = yield(validation_point)
+      if result
+        validation_point.pass
+      else
+        validation_point.fail(fail_message)
+      end
+    end
+
+    ##
+    # Sets validation mode, executes a single validation and then exits immediately.
+    # Use:
+    # @world.validation_engine.validate('one plus one equals 2', 'failed to calculate 2 from 1 plus 1') do
+    #   1+1=3
+    # end
+    # @param [String] message
+    # @param [String] fail_message
+    def validate!(message, fail_message)
+      enter_validation_mode
+      validate(message, fail_message) { yield }
+      exit_validation_mode
     end
 
     def cleanup
