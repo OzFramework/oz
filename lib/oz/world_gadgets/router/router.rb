@@ -5,12 +5,13 @@ module Oz
 
     def initialize(world)
       @world = world
+      @registry = RouterStore.registry
       @page_blueprints = RouterStore.generate_graph(@world)
       create_dot_file_from_graph if @world.configuration['CREATE_DOT_GRAPH']
     end
 
     def page_class_for(target_page)
-      @page_blueprints.keys.find{|it| it.to_s.downcase.eql? target_page.downcase.delete(' ')}
+      @registry.find{|it| it.to_s.downcase.eql? target_page.downcase.delete(' ')}
     end
 
     def wait_for_page_to_load(target_page = @world.current_page.class)

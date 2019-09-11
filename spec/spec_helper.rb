@@ -49,3 +49,4 @@ RSpec.configure do |config|
 end
 
 ENV['OZ_CONFIG_DIR'] = "#{__dir__}/fixtures"
+ENV['OZ_CORE_DIR'] = File.absolute_path './'
