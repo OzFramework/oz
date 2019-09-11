@@ -57,7 +57,7 @@ module Oz
       @world.logger.action "Clicking [#{@name}]"
       begin
         watir_element.click
-      rescue Selenium::WebDriver::Error::UnknownError => e
+      rescue Selenium::WebDriver::Error::ElementClickInterceptedError, Selenium::WebDriver::Error::UnknownError => e
         raise e unless e.message =~ /Element is not clickable at point .* Other element would receive the click/
         @world.logger.warn 'Click failed, assuming it was due to animations on the page. Trying again...'
         raise "Click kept failing! Original Error: \n#{e}" unless CoreUtils.wait_safely(3){ watir_element.click }
