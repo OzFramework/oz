@@ -43,6 +43,9 @@ module Oz
         self.respond_to?(action) ? self.send(action) : @elements[action].click
       end
       @world.assert_and_set_page(route.target_page)
+    rescue NoMethodError => e
+      message = e.message << ", attempted action was: #{action}"
+      raise e, message
     end
 
     # Check if a page was a valid target from this page.
