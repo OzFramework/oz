@@ -8,54 +8,52 @@ module Oz
     end
 
     def create_new_browser
-      @world.logger.debug "Creating new #{@world.configuration['BROWSER']} Browser"
-      case @world.configuration['BROWSER']
-        when 'firefox'
-          @world.browser = firefox_browser
-        when 'internet_explorer'
-          @world.browser = internet_explorer_browser
-        when 'chrome'
-          @world.browser = chrome_browser
-        else
-          raise "ERROR: No browser specified in configuration!\n" if @world.configuration['BROWSER'].nil?
-          raise "ERROR: Browser #{@world.configuration['BROWSER']} is not supported!\n"
+      configuration = @world.configuration
+      @world.logger.debug "Creating new #{configuration['BROWSER']} Browser"
+      browser_type = configuration['BROWSER']
+      raise "ERROR: No browser specified in configuration!\n" if browser_type.nil?
+      begin
+        @world.browser = send("#{browser_type}_browser")
+      rescue NoMethodError => e
+        raise "ERROR: Browser #{browser_type} is not supported!\n"
       end
-      maximize if @world.configuration['MAXIMIZE_BROWSER']
-      if @world.configuration['RESIZE_BROWSER']
-        begin
-          width, height = @world.configuration['RESIZE_BROWSER']
-          resize(width, height)
-        rescue => error
-          @world.logger.warn("WARNING: Could not resize the browser, make sure RESIZE_BROWSER option is set as an array with [width] set to first element and [height] set to second element. \n\tFull Error text: #{error.message}")
-        end
-      end
+      maximize if configuration['MAXIMIZE_BROWSER']
+      resize if configuration['RESIZE_BROWSER']
+      set_default_timeout
+      @world.browser # Return the browser just so we're returning something.
     end
 
     def chrome_browser
+      @read_timeouts = 0
+      caps = { open_timeout: 600, read_timeout: 600, "goog:chromeOptions": {} }
       if @world.configuration['USE_GRID']
-        capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(chrome_options: {'detach' => true})
-        driver = Selenium::WebDriver.for(:remote, :url => @world.configuration['ENVIRONMENT']['GRID'], desired_capabilities: capabilities)
+        test_name = ""
+        record_video = @world.configuration['ENVIRONMENT'] == 'production' ? false : @world.configuration['RECORD_VIDEO']
+        caps = { url: @world.configuration.tooling[:grid][:url],
+                 "goog:chromeOptions": { detach: true },
+                 recordVideo: record_video,
+                 tz: 'America/New_York',
+                 name: test_name,
+                 build: ENV['PIPELINE_ID'] || "#{ENV['USER']}@#{ENV['HOSTNAME']}",
+                 idleTimeout: 300 }
+        @read_timeouts = 0
       else
-        options = Selenium::WebDriver::Chrome::Options.new
-        if @world.configuration['HEADLESS_CHROME']
-          options.add_argument('headless')
-        else
-          options.add_option(:detach, true)
-        end
-
-        if @world.configuration['DRIVER_LOCATION']
-          path = @world.configuration['DRIVER_LOCATION']
-        else
-          if OS.linux?
-            path = "#{@world.configuration['CORE_DIR']}/utils/web_drivers/linux-chromedriver"
-          else
-            path = "#{@world.configuration['CORE_DIR']}/utils/web_drivers/chromedriver"
-            path += '.exe' if OS.windows?
-          end
-        end
-        driver = Selenium::WebDriver.for(:chrome, options: options, driver_path: path)
+        caps[:headless] = true if @world.configuration['HEADLESS_CHROME']
+        caps[:"goog:chromeOptions"][:detach] = true unless caps[:headless]
+        driver_path = @world.configuration['DRIVER_LOCATION']
+        driver_path ||= "#{__dir__}/../utils/web_drivers/linux-chromedriver" if OS.linux?
+        driver_path ||= "#{__dir__}/../utils/web_drivers/chromedriver"
+        driver_path << '.exe' if OS.windows?
+        Selenium::WebDriver::Chrome::Service.driver_path = driver_path
       end
-      return Watir::Browser.new(driver)
+      begin
+        Watir::Browser.new(:chrome, caps)
+      rescue Net::ReadTimeout => e
+        @read_timeouts += 1
+        @world.logger.warn("Error during driver creation. Trying to create the driver for the #{@read_timeouts.ordinalize} time...")
+        sleep(rand(10))
+        @read_timeouts <= 10 ? retry : Metadata.instance.append({exception: "#{e.backtrace.join("\n")}"})
+      end
     end
 
     def internet_explorer_browser
@@ -70,6 +68,10 @@ module Oz
       return Watir::Browser.new(driver)
     end
 
+    def set_default_timeout
+      Watir.default_timeout = @world.configuration['DEFAULT_ELEMENT_TIMEOUT']
+    end
+
     def firefox_browser
       path = "#{@world.configuration['CORE_DIR']}/utils/web_drivers/geckodriver"
       return Watir::Browser.new(:firefox, driver_path: path)
@@ -79,8 +81,11 @@ module Oz
       @world.browser.window.maximize
     end
 
-    def resize(width, height)
+    def resize
+      width, height = @world.configuration['RESIZE_BROWSER']
       @world.browser.window.resize_to(width, height)
+    rescue => error
+      @world.logger.warn("WARNING: Could not resize the browser, make sure RESIZE_BROWSER option is set as an array with [width] set to first element and [height] set to second element. \n\tFull Error text: #{error.message}")
     end
 
     def cleanup
