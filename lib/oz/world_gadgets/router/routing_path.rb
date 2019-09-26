@@ -1,5 +1,5 @@
 module Oz
-  module Router
+  class Router
     class RoutingPath
       include Enumerable
       attr_reader :routes, :router, :world
