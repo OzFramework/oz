@@ -56,7 +56,7 @@ module Oz
         route = start_blueprint.get_route_to(page)
         combined_path = current_path + [ route ]
 
-        return combined_path if destination_page == page
+        return RoutingPath.new(combined_path, self, @world) if destination_page == page
 
         visited_page_paths[page] = combined_path
         open_pages.push(page)
@@ -80,6 +80,10 @@ module Oz
       graph_file.close
 
       @world.logger.debug "Done!"
+    end
+
+    def blueprint(name)
+      @page_blueprints[name] || raise(Oz::NoPageInRegistryError.new(name))
     end
 
   end
