@@ -60,6 +60,10 @@ module Oz
       @logger.debug "#{@configuration}"
     end
 
+    def current_routing_path
+      @routes
+    end
+
   end
 
   OzLoader.append_to_world(CoreWorld)

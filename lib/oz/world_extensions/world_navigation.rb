@@ -5,11 +5,9 @@ module Oz
 
     def proceed_to(target_page)
       return if @current_page.class == target_page
-      routes = @router.get_routes_between(@current_page.class, target_page)
-      raise "No path found from [#{@current_page.class}] to [#{target_page}]" unless routes
-      routes.each do |route|
-        @current_page.navigate_via_route(route)
-      end
+      @routes = @router.get_routes_between(@current_page.class, target_page)
+      raise "No path found from [#{@current_page.class}] to [#{target_page}]" unless @routes
+      @routes.run!
     end
 
     # Like proceed_to, but will recalculate a route in the event of a failure
