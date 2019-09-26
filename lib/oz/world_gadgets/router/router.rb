@@ -1,4 +1,5 @@
 require_relative 'router_store'
+require_relative 'routing_path'
 
 module Oz
   class Router
