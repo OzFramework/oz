@@ -1,4 +1,5 @@
 require_relative 'page_blueprint'
+require_relative '../../elements/_core_element'
 
 module Oz
   class RouterStore
