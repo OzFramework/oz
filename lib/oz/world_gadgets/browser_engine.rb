@@ -52,7 +52,8 @@ module Oz
         @read_timeouts += 1
         @world.logger.warn("Error during driver creation. Trying to create the driver for the #{@read_timeouts.ordinalize} time...")
         sleep(rand(10))
-        @read_timeouts <= 10 ? retry : Metadata.instance.append({exception: "#{e.backtrace.join("\n")}"})
+        retry if @read_timeouts <= 10
+        raise(e, e.message, e.backtrace)
       end
     end
 
