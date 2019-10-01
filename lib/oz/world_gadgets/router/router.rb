@@ -1,4 +1,5 @@
 require_relative 'router_store'
+require_relative 'routing_path'
 
 module Oz
   class Router
@@ -20,13 +21,13 @@ module Oz
       timeout = 60 if @world.configuration["BROWSER"] == "internet_explorer"
 
       start_time = Time.now()
-      CoreUtils.wait_until(timeout) { @page_blueprints[target_page].done_waiting? }
+      CoreUtils.wait_until(timeout) { blueprint(target_page).done_waiting? }
       @world.logger.debug "Page loaded after [#{(Time.now - start_time).round(0)}] seconds"
     end
 
     def application_is_on_page?(page_class)
       @world.logger.debug "Attempting to ID page [#{page_class}]"
-      @page_blueprints[page_class].id_page
+      blueprint(page_class).id_page
     end
 
     def find_current_page
@@ -42,21 +43,21 @@ module Oz
       unless CoreUtils.wait_until(3){application_is_on_page?(page_class)}
         @world.logger.debug "Application was not on the [#{page_class}], attempting to find current page"
         current_page = find_current_page
-        raise "ERROR: The Application is on the wrong page!\n\tOZ expected that page to be [#{page_class}] but found [#{current_page}]!\n"
+        raise OzFramework::WrongPageError.new(page_class, current_page)
       end
     end
 
     def get_routes_between(start_page, destination_page, visited_page_paths = { start_page => [] }, open_pages = [])
       @world.logger.debug "Searching for path from [#{start_page}] to [#{destination_page}]..."
       current_path = visited_page_paths[start_page]
-      start_blueprint = @page_blueprints[start_page]
+      start_blueprint = blueprint(start_page)
       next_pages = start_blueprint.connected_pages - visited_page_paths.keys
 
       next_pages.each do |page|
         route = start_blueprint.get_route_to(page)
         combined_path = current_path + [ route ]
 
-        return combined_path if destination_page == page
+        return RoutingPath.new(combined_path, self, @world) if destination_page == page
 
         visited_page_paths[page] = combined_path
         open_pages.push(page)
@@ -80,6 +81,10 @@ module Oz
       graph_file.close
 
       @world.logger.debug "Done!"
+    end
+
+    def blueprint(name)
+      @page_blueprints[name] || raise(Oz::NoPageInRegistryError.new(name))
     end
 
   end

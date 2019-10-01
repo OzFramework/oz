@@ -1,3 +1,4 @@
+require_relative '../../errors/no_route_to_page_error'
 
 module Oz
   class PageBlueprint
@@ -38,7 +39,10 @@ module Oz
     end
 
     def get_route_to(page)
-      @routes[page]
+      route = @routes[page]
+      raise Oz::NoRouteToPageError.new(source_page, page) unless route
+
+      route
     end
 
     def connected_pages
